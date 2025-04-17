@@ -1,11 +1,14 @@
+'use client'
 import Link from "next/link"
 import { DollarSign, TrendingUp } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DashboardNav } from "@/components/dashboard-nav"
+import { useRouter } from "next/navigation"
 
 export default function InvestmentPlansPage() {
+  const router = useRouter()
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -27,18 +30,13 @@ export default function InvestmentPlansPage() {
         <div className="dashboard-container">
           <div className="dashboard-grid">
             <div className="dashboard-header">
-              <div>
+              <div className="p-2">
                 <h1 className="dashboard-title font-bold text-2xl">Investment Plans</h1>
                 <p className="dashboard-subtitle">
                   Choose from our high-yield investment plans to maximize your returns.
                 </p>
               </div> <br/>
-              <div className="flex items-center gap-4">
-                <Button>
-                  <DollarSign className="mr-2 h-4 w-4" />
-                  Invest Now
-                </Button>
-              </div>
+              
             </div>
     <br/>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -62,7 +60,7 @@ export default function InvestmentPlansPage() {
                     <span className="font-medium">400% ($5,000)</span>
                   </div>
                 </div>
-                <Button className="mt-6">Invest Now</Button>
+                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
               </div>
 
               <div className="flex flex-col rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
@@ -85,7 +83,7 @@ export default function InvestmentPlansPage() {
                     <span className="font-medium">400% ($25,000)</span>
                   </div>
                 </div>
-                <Button className="mt-6">Invest Now</Button>
+                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
               </div>
 
               <div className="flex flex-col rounded-lg border bg-[hsl(var(--primary)_/_0.1)] p-6 shadow-md transition-all hover:shadow-lg relative">
@@ -111,7 +109,7 @@ export default function InvestmentPlansPage() {
                     <span className="font-medium">300% ($40,000)</span>
                   </div>
                 </div>
-                <Button className="mt-6">Invest Now</Button>
+                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
               </div>
 
               <div className="flex flex-col rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
@@ -134,7 +132,7 @@ export default function InvestmentPlansPage() {
                     <span className="font-medium">333.33% ($65,000)</span>
                   </div>
                 </div>
-                <Button className="mt-6">Invest Now</Button>
+                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
               </div>
 
               <div className="flex flex-col rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
@@ -157,7 +155,7 @@ export default function InvestmentPlansPage() {
                     <span className="font-medium">300% ($80,000)</span>
                   </div>
                 </div>
-                <Button className="mt-6">Invest Now</Button>
+                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
               </div>
 
               <div className="flex flex-col items-center justify-center rounded-lg border border-dashed bg-secondary/30 p-6">

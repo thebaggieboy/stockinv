@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link"
 import { BarChart3, DollarSign, LineChart, PieChart, TrendingUp } from "lucide-react"
 
@@ -5,8 +6,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DashboardNav } from "@/components/dashboard-nav"
-
+Link
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
+import { useState } from "react"
 export default function PortfolioPage() {
+  const router = useRouter()
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -24,7 +29,7 @@ export default function PortfolioPage() {
           </div>
         </div>
       </header>
-      <main className="flex-1 bg-background">
+      <main className="flex-1 bg-background p-5">
         <div className="dashboard-container">
           <div className="dashboard-grid">
             <div className="dashboard-header">
@@ -37,7 +42,7 @@ export default function PortfolioPage() {
                   <LineChart className="mr-2 h-4 w-4" />
                   View Reports
                 </Button>
-                <Button>
+                <Button onClick={() => router.push("/dashboard/investment-plans")} variant="primary">
                   <DollarSign className="mr-2 h-4 w-4" />
                   Invest More
                 </Button>
@@ -54,7 +59,7 @@ export default function PortfolioPage() {
                   <div className="dashboard-card-value">$0.00</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
-                    +20.1% from last month
+                    +0.00% from last month
                   </p>
                 </CardContent>
               </Card>
@@ -67,7 +72,7 @@ export default function PortfolioPage() {
                   <div className="dashboard-card-value">0.00%</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
-                    +2.5% from last week
+                    +0.00% from last week
                   </p>
                 </CardContent>
               </Card>
@@ -78,7 +83,7 @@ export default function PortfolioPage() {
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">$3,245.67</div>
+                  <div className="dashboard-card-value">$0.00</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
                     +0.00% from last month
@@ -86,34 +91,7 @@ export default function PortfolioPage() {
                 </CardContent>
               </Card>
             </div>
-
-            <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 mt-6">
-              <Card className="dashboard-card">
-                <CardHeader>
-                  <CardTitle>Portfolio Performance</CardTitle>
-                  <CardDescription>Your investment growth over time</CardDescription>
-                </CardHeader>
-                <CardContent className="chart-container flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
-                    <LineChart className="mx-auto h-10 w-10 mb-2" />
-                    <p>Portfolio performance chart</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="dashboard-card">
-                <CardHeader>
-                  <CardTitle>Asset Allocation</CardTitle>
-                  <CardDescription>Distribution of your investments</CardDescription>
-                </CardHeader>
-                <CardContent className="chart-container flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
-                    <PieChart className="mx-auto h-10 w-10 mb-2" />
-                    <p>Asset allocation chart</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+ 
 
             <Card className="dashboard-card mt-6">
               <CardHeader>

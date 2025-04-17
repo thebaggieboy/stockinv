@@ -793,7 +793,7 @@ export default function SignalsPage() {
                 </CardContent>
               </Card>
 
-              <Card className="dashboard-card">
+           {/* {   <Card className="dashboard-card">
                 <CardHeader>
                   <CardTitle>Signal Alerts</CardTitle>
                   <CardDescription>Configure your trading signal notifications</CardDescription>
@@ -850,7 +850,7 @@ export default function SignalsPage() {
                     Manage All Alerts
                   </Button>
                 </CardFooter>
-              </Card>
+              </Card>} */}
             </div>
           </div>
         </div>

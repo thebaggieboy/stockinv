@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link"
 import { BarChart3, CreditCard, DollarSign, LineChart, Menu, Settings, TrendingUp, User, Wallet } from "lucide-react"
 
@@ -5,8 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { WalletDeposit } from "@/components/wallet-deposit"
 import { DashboardNav } from "@/components/dashboard-nav"
-import Router from "next/router"
+import { useRouter } from "next/navigation"
+ 
 export default function DashboardPage() {
+  const router = useRouter()
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -45,7 +48,7 @@ export default function DashboardPage() {
                   <LineChart className="mr-2 h-4 w-4" />
                   View Reports
                 </Button>
-                <Button onClick={() => Router.push("/dashboard/investment-plans")} variant="primary">
+                <Button onClick={() => router.push("/dashboard/investment-plans")} style={{backgroundColor:'green'}} variant="primary">
                   <DollarSign className="mr-2 h-4 w-4" />
                   Invest Now
                 </Button>
@@ -76,7 +79,7 @@ export default function DashboardPage() {
                   <div className="dashboard-card-value">0.00%</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
-                    +2.5% from last week
+                    +0.00% from last week
                   </p>
                 </CardContent>
               </Card>
@@ -143,7 +146,7 @@ export default function DashboardPage() {
                     <div className="text-right">
                       <p className="font-medium">+$5,000.00</p>
                       <p className="text-sm profit-text">Completed</p>
-                    </div>
+                    </div>  
                   </div>
                   <div className="flex items-center justify-between border-b border-border pb-4">
                     <div className="flex items-center gap-4">
