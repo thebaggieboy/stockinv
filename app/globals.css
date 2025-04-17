@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 6.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 142.1 76.2% 36.3%;
+    --primary-foreground: 355.7 100% 97.3%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 12%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 142.1 76.2% 36.3%;
+
+    --radius: 0.5rem;
+
+    /* Additional investment-themed colors */
+    --profit: 142.1 76.2% 36.3%;
+    --loss: 0 62.8% 50.6%;
+    --chart-blue: 217.2 91.2% 59.8%;
+    --chart-purple: 262.1 83.3% 57.8%;
+    --chart-yellow: 47.9 95.8% 53.1%;
+    --chart-orange: 24.6 95% 53.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.dashboard-container {
+  @apply container py-6 md:py-8 lg:py-12;
+}
+
+.dashboard-header {
+  @apply flex flex-col md:flex-row justify-between gap-4 mb-6;
+}
+
+.dashboard-title {
+  @apply text-3xl font-bold tracking-tight;
+}
+
+.dashboard-subtitle {
+  @apply text-muted-foreground;
+}
+
+.dashboard-grid {
+  @apply grid gap-6;
+}
+
+.dashboard-card {
+  @apply bg-card border-border hover:shadow-md transition-shadow duration-200;
+}
+
+.dashboard-card-header {
+  @apply flex flex-row items-center justify-between space-y-0 pb-2;
+}
+
+.dashboard-card-title {
+  @apply text-sm font-medium;
+}
+
+.dashboard-card-content {
+  @apply pt-4;
+}
+
+.dashboard-card-value {
+  @apply text-2xl font-bold;
+}
+
+.dashboard-card-metric {
+  @apply text-xs flex items-center;
+}
+
+.dashboard-card-metric-positive {
+  @apply text-[hsl(var(--profit))];
+}
+
+.dashboard-card-metric-negative {
+  @apply text-[hsl(var(--loss))];
+}
+
+.dashboard-section {
+  @apply py-4;
+}
+
+.dashboard-table {
+  @apply w-full;
+}
+
+.dashboard-table th {
+  @apply text-left py-3 px-4 text-muted-foreground text-sm font-medium;
+}
+
+.dashboard-table td {
+  @apply py-3 px-4 border-b border-border;
+}
+
+.dashboard-table tr:last-child td {
+  @apply border-b-0;
+}
+
+.dashboard-table-row-highlight {
+  @apply bg-secondary/30;
+}
+
+.profit-text {
+  @apply text-[hsl(var(--profit))];
+}
+
+.loss-text {
+  @apply text-[hsl(var(--loss))];
+}
+
+.chart-container {
+  @apply h-[300px] rounded-md overflow-hidden border border-border bg-card/50;
+}
+
+.wallet-address {
+  @apply font-mono text-sm bg-secondary p-3 rounded-md flex items-center justify-between;
+}
