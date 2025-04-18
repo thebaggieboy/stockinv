@@ -18,7 +18,7 @@ import { PieChart } from "lucide-react" // Import PieChart
 
 export default function SignalsPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col p-2">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
@@ -140,14 +140,11 @@ export default function SignalsPage() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <LineChart className="mr-2 h-4 w-4" />
-                        View Chart
-                      </Button>
-                      <Button size="sm">
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        Trade Now
-                      </Button>
+                  
+                      <Link  href={"/dashboard/wallet#deposit_funds"} style={{transition:"1", backgroundColor:"green", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
+                    Trade Now
+                  </Link>
                     </CardFooter>
                   </Card>
 
@@ -206,14 +203,11 @@ export default function SignalsPage() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <LineChart className="mr-2 h-4 w-4" />
-                        View Chart
-                      </Button>
-                      <Button size="sm">
-                        <TrendingDown className="mr-2 h-4 w-4" />
-                        Trade Now
-                      </Button>
+                  
+                      <Link  href={"/dashboard/wallet#deposit_funds"} style={{transition:"1", backgroundColor:"green", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
+                    Trade Now
+                  </Link>
                     </CardFooter>
                   </Card>
 
@@ -269,14 +263,10 @@ export default function SignalsPage() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <LineChart className="mr-2 h-4 w-4" />
-                        View Chart
-                      </Button>
-                      <Button size="sm">
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        Trade Now
-                      </Button>
+                    <Link  href={"/dashboard/wallet#deposit_funds"} style={{transition:"1", backgroundColor:"green", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
+                    Trade Now
+                  </Link>
                     </CardFooter>
                   </Card>
 
@@ -335,14 +325,11 @@ export default function SignalsPage() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <LineChart className="mr-2 h-4 w-4" />
-                        View Chart
-                      </Button>
-                      <Button size="sm">
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        Trade Now
-                      </Button>
+                     
+                    <Link  href={"/dashboard/wallet#deposit_funds"} style={{transition:"1", backgroundColor:"green", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
+                    Trade Now
+                  </Link>
                     </CardFooter>
                   </Card>
 
@@ -401,14 +388,11 @@ export default function SignalsPage() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <LineChart className="mr-2 h-4 w-4" />
-                        View Chart
-                      </Button>
-                      <Button size="sm">
-                        <TrendingDown className="mr-2 h-4 w-4" />
-                        Trade Now
-                      </Button>
+                      
+                    <Link  href={"/dashboard/wallet#deposit_funds"} style={{transition:"1", backgroundColor:"green", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
+                    Trade Now
+                  </Link>
                     </CardFooter>
                   </Card>
 
@@ -467,14 +451,11 @@ export default function SignalsPage() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <LineChart className="mr-2 h-4 w-4" />
-                        View Chart
-                      </Button>
-                      <Button size="sm">
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        Trade Now
-                      </Button>
+                    
+                    <Link  href={"/dashboard/wallet#deposit_funds"} style={{transition:"1", backgroundColor:"green", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
+                    Trade Now
+                  </Link>
                     </CardFooter>
                   </Card>
                 </div>
@@ -537,14 +518,11 @@ export default function SignalsPage() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <LineChart className="mr-2 h-4 w-4" />
-                        View Chart
-                      </Button>
-                      <Button size="sm">
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        Trade Now
-                      </Button>
+                    
+                    <Link  href={"/dashboard/wallet#deposit_funds"} style={{transition:"1", backgroundColor:"green", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
+                    Trade Now
+                  </Link>
                     </CardFooter>
                   </Card>
                 </div>
@@ -604,14 +582,11 @@ export default function SignalsPage() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <LineChart className="mr-2 h-4 w-4" />
-                        View Chart
-                      </Button>
-                      <Button size="sm">
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        Trade Now
-                      </Button>
+                     
+                    <Link  href={"/dashboard/wallet#deposit_funds"} style={{transition:"1", backgroundColor:"green", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
+                    Trade Now
+                  </Link>
                     </CardFooter>
                   </Card>
                 </div>
@@ -674,14 +649,11 @@ export default function SignalsPage() {
                       </div>
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                      <Button variant="outline" size="sm">
-                        <LineChart className="mr-2 h-4 w-4" />
-                        View Chart
-                      </Button>
-                      <Button size="sm">
-                        <TrendingUp className="mr-2 h-4 w-4" />
-                        Trade Now
-                      </Button>
+                    
+                    <Link  href={"/dashboard/wallet#deposit_funds"} style={{transition:"1", backgroundColor:"green", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
+                    Trade Now
+                  </Link>
                     </CardFooter>
                   </Card>
                 </div>
