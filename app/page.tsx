@@ -385,7 +385,7 @@ export default function LandingPage() {
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
               <div className="flex items-center justify-center">
                 <div className="relative w-full h-[400px] rounded-xl overflow-hidden shadow-xl border border-zinc-800 bg-zinc-950">
-                  <Image src="/cc.png" alt="Crypto Wallet" fill className="object-cover" />
+                  <Image src="/dep-dash.png" alt="Crypto Wallet" fill className="object-cover" />
                 </div>
               </div>
               <div className="flex flex-col justify-center space-y-4">
