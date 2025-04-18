@@ -146,6 +146,7 @@ export default function LoginPage() {
               autoCorrect="off"
               disabled={isLoading}
               required
+              onChange={inputChangeHandler} 
             />
           </div>
           <div className="grid gap-2">
@@ -165,6 +166,7 @@ export default function LoginPage() {
               autoCorrect="off"
               disabled={isLoading}
               required
+              onChange={inputChangeHandler}
             />
           </div>
           <Button disabled={isLoading} className="bg-green-600 hover:bg-green-700">
