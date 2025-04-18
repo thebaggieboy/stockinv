@@ -18,8 +18,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DashboardNav } from "@/components/dashboard-nav"
 import { WalletDeposit } from "@/components/wallet-deposit"
+import { useRouter } from "next/navigation"
+
 
 export default function WalletPage() {
+  const router = useRouter()
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -64,10 +67,10 @@ export default function WalletPage() {
                   <p className="dashboard-card-metric">Ready to invest</p>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button variant="outline" size="sm" className="w-[48%]">
-                    <ArrowDown className="mr-2 h-4 w-4" />
+                  <Link  href={"#deposit_funds"} style={{transition:"1", backgroundColor:"white", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
+                    
                     Deposit
-                  </Button>
+                  </Link>
                   <Button variant="outline" size="sm" className="w-[48%]">
                     <ArrowUp className="mr-2 h-4 w-4" />
                     Withdraw
@@ -160,10 +163,10 @@ export default function WalletPage() {
               </Card>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 mt-6">
-              <Card className="dashboard-card">
+            <div  className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 mt-6">
+              <Card className="dashboard-card" >
                 <CardHeader>
-                  <CardTitle>Deposit Funds</CardTitle>
+                  <CardTitle id="deposit_funds">Deposit Funds</CardTitle>
                   <CardDescription>Add funds to your account using cryptocurrency</CardDescription>
                 </CardHeader>
                 <CardContent>
