@@ -81,6 +81,8 @@ export default function SignupPage() {
               setSpinner(false)
               signUpSuccess()
               await signUpFn(formData)
+             
+              
                   
                   
               }

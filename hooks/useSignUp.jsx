@@ -27,7 +27,7 @@ const useSignUp = (url, successCallback, userType) => {
             })
             const data = await res.json()
 
-            let filteredUsers = data.filter((user) => {
+            let filteredUsers = data?.filter((user) => {
                 return user.email === user_email;
             });
           

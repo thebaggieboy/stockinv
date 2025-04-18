@@ -20,10 +20,10 @@ export default function DashboardPage() {
   const token = useSelector(selectToken);
    const router = useRouter();
 
-//   { if(user == null){
-//       router.push('/login')
-//    }
-//  }
+  if(user == null){
+       router.push('/login')
+    }
+
   async function logout() {
     try {
     
@@ -73,7 +73,7 @@ export default function DashboardPage() {
             <div className="dashboard-header">
               <div>
                 <h1 className="dashboard-title font-bold text-2xl">Dashboard</h1>
-                <p className="dashboard-subtitle pt-2">Welcome back, {user?.email}! Here's an overview of your investments.</p>
+                <p className="dashboard-subtitle pt-2">Welcome back, {user?.[0]?.email}! Here's an overview of your investments.</p>
               </div> <br/>
               <div className="flex items-center gap-4">
               {user !== null ?  <Button style={{backgroundColor:'red'}}  onClick={logout}> Logout </Button> : ""}
