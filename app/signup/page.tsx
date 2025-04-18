@@ -7,7 +7,7 @@ import { USER_TYPES, selectUser, setUser, setUserType } from "../../features/use
 import Head from "next/head"
 
 import { useMutation } from "@tanstack/react-query";
-import useSignUp from "@/hooks/useSignup";
+import useSignUp from "@/hooks/useSignUp";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
