@@ -17,8 +17,8 @@ export function WalletDeposit() {
 
   // Wallet addresses for different cryptocurrencies
   const walletAddresses = {
-    bitcoin: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
-    ethereum: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
+    bitcoin: "bc1qlf5nr2zem75e6ewqxewzszdvpxxezpefgwzcu6",
+    ethereum: "0x792eb5501c3af4fd8e0f1cfddf802941a07854e2",
     usdc: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
   }
 
