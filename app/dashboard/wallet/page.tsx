@@ -201,8 +201,8 @@ export default function WalletPage() {
                       <span className="font-medium">Bitcoin (BTC)</span>
                     </div>
                     <div className="wallet-address">
-                     <span>bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</span>
-                      >
+                     <span>bc1qlf5nr2zem75e6ewqxewzszdvpxxezpefgwzcu6</span>
+                      
                       <Button variant="ghost" size="icon" className="h-8 w-8">
                         <Copy className="h-4 w-4" />
                       </Button>
@@ -246,7 +246,7 @@ export default function WalletPage() {
                       <span className="font-medium">Ethereum (ETH)</span>
                     </div>
                     <div className="wallet-address">
-                      <span>0x71C7656EC7ab88b098defB751B7401B5f6d8976F</span>
+                      <span>0x792eb5501c3af4fd8e0f1cfddf802941a07854e2</span>
                       <Button variant="ghost" size="icon" className="h-8 w-8">
                         <Copy className="h-4 w-4" />
                       </Button>
@@ -293,7 +293,7 @@ export default function WalletPage() {
                     <TabsTrigger value="withdrawals">Withdrawals</TabsTrigger>
                     <TabsTrigger value="investments">Investments</TabsTrigger>
                   </TabsList>
-                  <TabsContent value="all">
+{/* {                  <TabsContent value="all">
                     <div className="space-y-4">
                       <div className="flex items-center justify-between border-b border-border pb-4">
                         <div className="flex items-center gap-4">
@@ -428,7 +428,7 @@ export default function WalletPage() {
                         </div>
                       </div>
                     </div>
-                  </TabsContent>
+                  </TabsContent>} */}
                 </Tabs>
               </CardContent>
               <CardFooter>
