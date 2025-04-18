@@ -20,9 +20,9 @@ export default function DashboardPage() {
   const token = useSelector(selectToken);
    const router = useRouter();
 
-  if(user == null){
-       router.push('/login')
-    }
+  // if(user == null){
+  //      router.push('/login')
+  //   }
 
   async function logout() {
     try {
@@ -92,7 +92,7 @@ export default function DashboardPage() {
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">$0.00</div>
+                  <div className="dashboard-card-value">$1000.00</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
                     +0.00% from last month
@@ -118,7 +118,7 @@ export default function DashboardPage() {
                   <CreditCard className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">$0.00</div>
+                  <div className="dashboard-card-value">$1000.00</div>
                   <p className="dashboard-card-metric">Ready to invest</p>
                 </CardContent>
               </Card>
