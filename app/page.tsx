@@ -13,8 +13,16 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/router";
 
+
+import { useDispatch, useSelector } from "react-redux";
+import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../features/user/userSlice";
+import { selectUserEmail,  setUserEmail } from "../features/user/userActiveEmail";
+import {selectToken, setToken} from "../features/token/tokenSlice";
 export default function LandingPage() {
+
+
   return (
     <div className="flex min-h-screen flex-col bg-black text-white">
       <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">

@@ -7,9 +7,41 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { WalletDeposit } from "@/components/wallet-deposit"
 import { DashboardNav } from "@/components/dashboard-nav"
 import { useRouter } from "next/navigation"
- 
+import { useDispatch, useSelector } from "react-redux";
+import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../../features/user/userSlice";
+import { selectUserEmail,  setUserEmail } from "../../features/user/userActiveEmail";
+import {selectToken, setToken} from "../../features/token/tokenSlice";
+
+
 export default function DashboardPage() {
-  const router = useRouter()
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const user_email = useSelector(selectUserEmail);
+  const token = useSelector(selectToken);
+   const router = useRouter();
+
+//   { if(user == null){
+//       router.push('/login')
+//    }
+//  }
+  async function logout() {
+    try {
+    
+      document.cookie = ""
+
+      dispatch(setToken(null))
+    
+      dispatch(setUserEmail(null))
+      dispatch(setUser(null));
+    
+      
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -41,13 +73,10 @@ export default function DashboardPage() {
             <div className="dashboard-header">
               <div>
                 <h1 className="dashboard-title font-bold text-2xl">Dashboard</h1>
-                <p className="dashboard-subtitle pt-2">Welcome back, John! Here's an overview of your investments.</p>
+                <p className="dashboard-subtitle pt-2">Welcome back, {user?.email}! Here's an overview of your investments.</p>
               </div> <br/>
               <div className="flex items-center gap-4">
-                <Button variant="outline">
-                  <LineChart className="mr-2 h-4 w-4" />
-                  View Reports
-                </Button>
+              {user !== null ?  <Button style={{backgroundColor:'red'}}  onClick={logout}> Logout </Button> : ""}
                 <Button onClick={() => router.push("/dashboard/investment-plans")} style={{backgroundColor:'green'}} variant="primary">
                   <DollarSign className="mr-2 h-4 w-4" />
                   Invest Now
@@ -66,7 +95,7 @@ export default function DashboardPage() {
                   <div className="dashboard-card-value">$0.00</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
-                    +20.1% from last month
+                    +0.00% from last month
                   </p>
                 </CardContent>
               </Card>

@@ -6,7 +6,7 @@ import {selectUser, setUser} from "../features/user/userSlice"
 import { useDispatch, useSelector } from "react-redux";
 import useData from './useData'
 import { selectUserEmail, setUserEmail } from '../features/user/userActiveEmail'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
  
@@ -44,7 +44,7 @@ const useLogin = (url, successCallback, userType) => {
           
             if (res.status >= 200 & res.status <= 209) {
                 dispatch(setToken(data?.access))
-                const  url2 = "https://altclan-api.onrender.com/api/users/"
+                const  url2 = "http://127.0.0.1:8000/api/users/"
                 const res2 =  await fetch(url2, {
                     method: "GET",
                     headers: {

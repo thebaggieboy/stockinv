@@ -49,6 +49,7 @@ export default function SignupPage() {
       })
   
     }
+    
     function signUpSuccess() {
       
       router.push("/dashboard")
@@ -75,11 +76,11 @@ export default function SignupPage() {
               const data = await res.json()
   
               if (res.status >= 200 & res.status <= 209) {
-          console.log("New User Registered.")
-          console.log(data)
-          setSpinner(false)
-          signUpSuccess()
-          await signUpFn(formData)
+              console.log("New User Registered.")
+              console.log(data)
+              setSpinner(false)
+              signUpSuccess()
+              await signUpFn(formData)
                   
                   
               }
