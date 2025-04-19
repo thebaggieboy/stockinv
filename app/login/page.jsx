@@ -50,7 +50,7 @@ export default function LoginPage() {
   
     if (user !== null) {
      
-      router.push("/products");
+      router.push("/dashboard");
       
     }
     

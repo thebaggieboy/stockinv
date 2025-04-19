@@ -7,7 +7,7 @@ import { USER_TYPES, selectUser, setUser, setUserType } from "../../features/use
 import Head from "next/head"
 
 import { useMutation } from "@tanstack/react-query";
-import useSignUp from "@/hooks/useSignUp";
+import useSignUp from "../../hooks/useSignUp";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -50,6 +50,10 @@ export default function SignupPage() {
   
     }
     
+    if (user == null) {
+      router.push("/login");
+    }
+
     function signUpSuccess() {
       
       router.push("/dashboard")
@@ -78,6 +82,7 @@ export default function SignupPage() {
               if (res.status >= 200 & res.status <= 209) {
               console.log("New User Registered.")
               console.log(data)
+           
               setSpinner(false)
               signUpSuccess()
               await signUpFn(formData)
