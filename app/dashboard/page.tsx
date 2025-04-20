@@ -183,7 +183,7 @@ fetchBalance()
                 <CardTitle>Recent Transactions</CardTitle>
                 <CardDescription>Your recent investment activities</CardDescription>
               </CardHeader>
-              <CardContent>
+{/* {              <CardContent>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between border-b border-border pb-4">
                     <div className="flex items-center gap-4">
@@ -231,7 +231,7 @@ fetchBalance()
                     </div>
                   </div>
                 </div>
-              </CardContent>
+              </CardContent>} */}
               <CardFooter>
                 <Button variant="outline" className="w-full">
                   View All Transactions

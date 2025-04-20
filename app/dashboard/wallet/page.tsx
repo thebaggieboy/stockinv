@@ -19,13 +19,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DashboardNav } from "@/components/dashboard-nav"
 import { WalletDeposit } from "@/components/wallet-deposit"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
-
+import { useState, useEffect } from "react"
+import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../../../features/user/userSlice";
+import { selectUserEmail,  setUserEmail } from "../../../features/user/userActiveEmail";
+import {selectToken, setToken} from "../../../features/token/tokenSlice";
+import { useSelector } from "react-redux"
 
 export default function WalletPage() {
   const router = useRouter()
    const [wallets, setWallets] = useState([]);
    const [btcBalance, setBtcBalance] = useState([]);
+    const user = useSelector(selectUser);
   
 
 async function fetchBalance(){
@@ -47,21 +51,22 @@ if (res.status >= 200 & res.status <= 209) {
 
 
 }
+
 fetchBalance()
 
 async function convertUsdToBitcoin() {
   const usdAmount = wallets?.balance;
   
   try {
-    // Fetch Bitcoin price
-    const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
+    // Try a different API
+    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
     const data = await response.json();
     
     // Calculate and display conversion
-    const btcPrice = data.bpi.USD.rate_float;
+    const btcPrice = data.bitcoin.usd;
     const btcAmount = usdAmount / btcPrice;
     setBtcBalance(btcAmount)
-
+    
     console.log(`$${usdAmount} USD = ${btcAmount.toFixed(8)} BTC`);
     console.log(`(Based on 1 BTC = $${btcPrice.toLocaleString()} USD)`);
     
@@ -71,7 +76,6 @@ async function convertUsdToBitcoin() {
     return null;
   }
 }
-
 // Call the function
 convertUsdToBitcoin();
 console.log("BTC Balance [STATE]: ", btcBalance);
