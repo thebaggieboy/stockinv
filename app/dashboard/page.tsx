@@ -161,7 +161,7 @@ fetchBalance()
                   </div>
                 </CardContent>
               </Card> */}
-}
+
               <Card className="col-span-1 dashboard-card">
                 <CardHeader>
                   <CardTitle>Deposit to Wallet</CardTitle>
