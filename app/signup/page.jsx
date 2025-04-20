@@ -50,9 +50,7 @@ export default function SignupPage() {
   
     }
     
-    if (user == null) {
-      router.push("/login");
-    }
+   
 
     function signUpSuccess() {
       
