@@ -118,7 +118,7 @@ fetchBalance()
                   <div className="dashboard-card-value">${wallets?.balance}</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
-                    +0.00% from last month
+                    +{wallets?.this_month_roi}% from last month
                   </p>
                 </CardContent>
               </Card>
@@ -131,7 +131,7 @@ fetchBalance()
                   <div className="dashboard-card-value">{wallets?.all_time_roi}%</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
-                    +0.00% from last week
+                    +{wallets?.this_week_roi}% from last week
                   </p>
                 </CardContent>
               </Card>
@@ -149,7 +149,7 @@ fetchBalance()
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
-              <Card className="col-span-1 dashboard-card">
+             {/* { <Card className="col-span-1 dashboard-card">
                 <CardHeader>
                   <CardTitle>Portfolio Performance</CardTitle>
                   <CardDescription>Your investment growth over time</CardDescription>
@@ -160,8 +160,8 @@ fetchBalance()
                     <p>Portfolio performance chart</p>
                   </div>
                 </CardContent>
-              </Card>
-
+              </Card> */}
+}
               <Card className="col-span-1 dashboard-card">
                 <CardHeader>
                   <CardTitle>Deposit to Wallet</CardTitle>
