@@ -25,6 +25,7 @@ import { useState } from "react"
 export default function WalletPage() {
   const router = useRouter()
    const [wallets, setWallets] = useState([]);
+   const [btcBalance, setBtcBalance] = useState([]);
   
 
 async function fetchBalance(){
@@ -42,11 +43,38 @@ if (res.status >= 200 & res.status <= 209) {
   console.log("Wallets [STATE]: ", data);
 }
  
-
+// Simple function to convert $5000 to Bitcoin
 
 
 }
 fetchBalance()
+
+async function convertUsdToBitcoin() {
+  const usdAmount = wallets?.balance;
+  
+  try {
+    // Fetch Bitcoin price
+    const response = await fetch('https://api.coindesk.com/v1/bpi/currentprice.json');
+    const data = await response.json();
+    
+    // Calculate and display conversion
+    const btcPrice = data.bpi.USD.rate_float;
+    const btcAmount = usdAmount / btcPrice;
+    setBtcBalance(btcAmount)
+
+    console.log(`$${usdAmount} USD = ${btcAmount.toFixed(8)} BTC`);
+    console.log(`(Based on 1 BTC = $${btcPrice.toLocaleString()} USD)`);
+    
+    return btcAmount;
+  } catch (error) {
+    console.error('Failed to convert currency:', error);
+    return null;
+  }
+}
+
+// Call the function
+convertUsdToBitcoin();
+console.log("BTC Balance [STATE]: ", btcBalance);
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -123,8 +151,8 @@ fetchBalance()
                   </div>
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">0.0000 BTC</div>
-                  <p className="dashboard-card-metric">≈ $0.00</p>
+                  <div className="dashboard-card-value">{btcBalance} BTC</div>
+                  <p className="dashboard-card-metric">≈ ${wallets?.balance}</p>
                 </CardContent>
                 <CardFooter className="flex justify-between">
                   <Button variant="outline" size="sm" className="w-[48%]">
@@ -137,7 +165,7 @@ fetchBalance()
                   </Button>
                 </CardFooter>
               </Card>
-
+{/* {
               <Card className="dashboard-card">
                 <CardHeader className="dashboard-card-header">
                   <CardTitle className="dashboard-card-title">Ethereum Balance</CardTitle>
@@ -184,7 +212,7 @@ fetchBalance()
                     Send
                   </Button>
                 </CardFooter>
-              </Card>
+              </Card>} */}
             </div>
 
             <div  className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 mt-6">
