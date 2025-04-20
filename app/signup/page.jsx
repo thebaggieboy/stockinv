@@ -23,7 +23,7 @@ export default function SignupPage() {
  
   const dispatch = useDispatch();
 
-    const { isIdle, isPending, error, mutateAsync: signUpFn } = useSignUp("http://127.0.0.1:8000/auth/users/", signUpSuccess, USER_TYPES.user)
+    const { isIdle, isPending, error, mutateAsync: signUpFn } = useSignUp("https://avantrades-api.onrender.com/auth/users/", signUpSuccess, USER_TYPES.user)
     //const { isIdle, isPending, error, mutateAsync: signUpFn } = useDjoserSignup("https://altclan-brands-api-1-1.onrender.com/auth/jwt/create", signUpSuccess, USER_TYPES.user)
   
     
@@ -66,7 +66,7 @@ export default function SignupPage() {
           throw { password: "Passwords do not match" }
         }
         setSpinner(true)
-        const url = "http://127.0.0.1:8000/auth/users/"
+        const url = "https://avantrades-api.onrender.com/auth/users/"
         const res = await fetch(url, {
                   method: "POST",
                   headers: {

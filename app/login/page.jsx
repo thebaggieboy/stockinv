@@ -55,8 +55,8 @@ export default function LoginPage() {
     }
     
   
-    //const { isIdle, isPending, error, mutateAsync: loginFn } = useLogin("http://127.0.0.1:8000/dj-rest-auth/login/", loginSuccess, USER_TYPES.user)
-    const { isIdle, isPending, error, mutateAsync: loginFn } = useLogin("http://127.0.0.1:8000/auth/jwt/create/", loginSuccess, USER_TYPES.user)
+    //const { isIdle, isPending, error, mutateAsync: loginFn } = useLogin("https://avantrades-api.onrender.com/dj-rest-auth/login/", loginSuccess, USER_TYPES.user)
+    const { isIdle, isPending, error, mutateAsync: loginFn } = useLogin("https://avantrades-api.onrender.com/auth/jwt/create/", loginSuccess, USER_TYPES.user)
     const [formData, setFormData] = useState({
       email: "",
       password: "",

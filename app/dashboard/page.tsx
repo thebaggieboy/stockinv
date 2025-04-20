@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../../features/user/userSlice";
 import { selectUserEmail,  setUserEmail } from "../../features/user/userActiveEmail";
 import {selectToken, setToken} from "../../features/token/tokenSlice";
+import { useState } from "react"
 
 
 export default function DashboardPage() {
@@ -19,11 +20,33 @@ export default function DashboardPage() {
   const user_email = useSelector(selectUserEmail);
   const token = useSelector(selectToken);
    const router = useRouter();
+   const [wallets, setWallets] = useState([]);
 
-  // if(user == null){
-  //      router.push('/login')
-  //   }
+   if(user == null){
+       router.push('/login')
+    }
 
+
+async function fetchBalance(){
+  const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
+    method: "GET",
+    headers: {
+    
+        "Content-Type": "application/json"
+    },
+})
+
+const data = await res.json()
+if (res.status >= 200 & res.status <= 209) {
+  setWallets(data)
+  console.log("Wallets [STATE]: ", data);
+}
+ 
+
+
+
+}
+fetchBalance()
   async function logout() {
     try {
     
@@ -92,7 +115,7 @@ export default function DashboardPage() {
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">$1000.00</div>
+                  <div className="dashboard-card-value">${wallets?.balance}</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
                     +0.00% from last month
@@ -105,7 +128,7 @@ export default function DashboardPage() {
                   <BarChart3 className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">0.00%</div>
+                  <div className="dashboard-card-value">{wallets?.all_time_roi}%</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
                     +0.00% from last week
@@ -118,7 +141,7 @@ export default function DashboardPage() {
                   <CreditCard className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">$1000.00</div>
+                  <div className="dashboard-card-value">${wallets?.balance}</div>
                   <p className="dashboard-card-metric">Ready to invest</p>
                 </CardContent>
               </Card>

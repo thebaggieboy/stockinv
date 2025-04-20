@@ -19,10 +19,34 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DashboardNav } from "@/components/dashboard-nav"
 import { WalletDeposit } from "@/components/wallet-deposit"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 
 export default function WalletPage() {
   const router = useRouter()
+   const [wallets, setWallets] = useState([]);
+  
+
+async function fetchBalance(){
+  const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
+    method: "GET",
+    headers: {
+    
+        "Content-Type": "application/json"
+    },
+})
+
+const data = await res.json()
+if (res.status >= 200 & res.status <= 209) {
+  setWallets(data)
+  console.log("Wallets [STATE]: ", data);
+}
+ 
+
+
+
+}
+fetchBalance()
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -63,7 +87,7 @@ export default function WalletPage() {
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">$0.00</div>
+                  <div className="dashboard-card-value">${wallets?.balance}</div>
                   <p className="dashboard-card-metric">Ready to invest</p>
                 </CardContent>
                 <CardFooter className="flex justify-between">
