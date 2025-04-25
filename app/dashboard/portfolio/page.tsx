@@ -6,12 +6,48 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { DashboardNav } from "@/components/dashboard-nav"
-Link
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../../../features/user/userSlice";
+import { selectUserEmail,  setUserEmail } from "../../../features/user/userActiveEmail";
+import {selectToken, setToken} from "../../../features/token/tokenSlice";
 import { useState } from "react"
+
+
+
 export default function PortfolioPage() {
-  const router = useRouter()
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const user_email = useSelector(selectUserEmail);
+  const token = useSelector(selectToken);
+   const router = useRouter();
+   const [wallets, setWallets] = useState([]);
+
+   if(user == null){
+       router.push('/login')
+    }
+
+
+async function fetchBalance(){
+  const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
+    method: "GET",
+    headers: {
+    
+        "Content-Type": "application/json"
+    },
+})
+
+const data = await res.json()
+if (res.status >= 200 & res.status <= 209) {
+  setWallets(data)
+  console.log("Wallets [STATE]: ", data);
+}
+ 
+
+
+
+}
+fetchBalance()
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -56,10 +92,10 @@ export default function PortfolioPage() {
                   <DollarSign className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">$0.00</div>
+                  <div className="dashboard-card-value">${wallets?.balance}</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
-                    +0.00% from last month
+                    +{wallets?.this_month_roi}% from last month
                   </p>
                 </CardContent>
               </Card>
@@ -69,7 +105,7 @@ export default function PortfolioPage() {
                   <BarChart3 className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
-                  <div className="dashboard-card-value">0.00%</div>
+                  <div className="dashboard-card-value">{wallets?.all_time_roi}%</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
                     +0.00% from last week
@@ -93,7 +129,7 @@ export default function PortfolioPage() {
             </div>
  
 
-            <Card className="dashboard-card mt-6">
+           {/* { <Card className="dashboard-card mt-6">
               <CardHeader>
                 <CardTitle>Active Investments</CardTitle>
                 <CardDescription>Your current investment plans</CardDescription>
@@ -262,7 +298,7 @@ export default function PortfolioPage() {
                   View All Investments
                 </Button>
               </CardFooter>
-            </Card>
+            </Card>} */}
 
             <Card className="dashboard-card mt-6">
               <CardHeader>

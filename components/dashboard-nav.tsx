@@ -28,11 +28,7 @@ export function DashboardNav() {
       href: "/dashboard/wallet",
       icon: Wallet,
     },
-    {
-      name: "Transactions",
-      href: "/transactions",
-      icon: CreditCard,
-    },
+  
   ]
 
   return (

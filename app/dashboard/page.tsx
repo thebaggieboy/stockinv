@@ -178,66 +178,7 @@ fetchBalance()
               </Card>
             </div>
 
-            <Card className="dashboard-card">
-              <CardHeader>
-                <CardTitle>Recent Transactions</CardTitle>
-                <CardDescription>Your recent investment activities</CardDescription>
-              </CardHeader>
-{/* {              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between border-b border-border pb-4">
-                    <div className="flex items-center gap-4">
-                      <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                        <Wallet className="h-4 w-4 text-[hsl(var(--primary))]" />
-                      </div>
-                      <div>
-                        <p className="font-medium">Deposit (Bitcoin)</p>
-                        <p className="text-sm text-muted-foreground">Apr 15, 2025</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">+$5,000.00</p>
-                      <p className="text-sm profit-text">Completed</p>
-                    </div>  
-                  </div>
-                  <div className="flex items-center justify-between border-b border-border pb-4">
-                    <div className="flex items-center gap-4">
-                      <div className="rounded-full bg-[hsl(var(--chart-blue)_/_0.2)] p-2">
-                        <DollarSign className="h-4 w-4 text-[hsl(var(--chart-blue))]" />
-                      </div>
-                      <div>
-                        <p className="font-medium">Stock Purchase (AAPL)</p>
-                        <p className="text-sm text-muted-foreground">Apr 14, 2025</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">-$2,450.00</p>
-                      <p className="text-sm profit-text">Completed</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="rounded-full bg-[hsl(var(--chart-blue)_/_0.2)] p-2">
-                        <DollarSign className="h-4 w-4 text-[hsl(var(--chart-blue))]" />
-                      </div>
-                      <div>
-                        <p className="font-medium">Stock Purchase (MSFT)</p>
-                        <p className="text-sm text-muted-foreground">Apr 12, 2025</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">-$1,850.00</p>
-                      <p className="text-sm profit-text">Completed</p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>} */}
-              <CardFooter>
-                <Button variant="outline" className="w-full">
-                  View All Transactions
-                </Button>
-              </CardFooter>
-            </Card>
+          
           </div>
         </div>
       </main>

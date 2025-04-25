@@ -2,7 +2,10 @@
 
 import { useState } from "react"
 import { Bitcoin, Check, Copy, CreditCard, Wallet } from "lucide-react"
-
+import { useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from "react-redux";
+import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../features/user/userSlice";
+import { selectUserEmail,  setUserEmail } from "../features/user/userActiveEmail";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -10,10 +13,82 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export function WalletDeposit() {
-  const [amount, setAmount] = useState("")
+ 
   const [cryptoType, setCryptoType] = useState("bitcoin")
   const [isLoading, setIsLoading] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [isDeposit, setIsDeposit] = useState(false)
+  const [isWithdraw, setIsWithdraw] = useState(false)
+  const [isTransaction, setIsTransaction] = useState(false)
+  const [isDepositSuccess, setIsDepositSuccess] = useState(false)
+  const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false)
+  const [transactions, setTransactions] = useState([])
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const user = useSelector(selectUser);
+ 
+
+  function createTransaction(){
+    console.log("Creating transaction...")
+    // Simulate API call
+
+
+  }
+
+    const [formData, setFormData] = useState({
+        email:user[0].email,  
+        amount: "",
+        type: "deposit",
+        status: "pending",	
+         
+      })
+      // Handle form submission
+const { email, amount, type, status } = formData
+
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target
+    setFormData((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value
+      }
+    })
+
+  }
+
+// Function to filter transactions by current user's email
+
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    console.log("Form submitted:", formData)
+    // Perform your deposit logic here
+    // For example, you can send the data to your server or API
+    handleDeposit();
+    const res = await fetch("https://avantrades-api.onrender.com/api/transactions/", {
+      method: "POST",
+      headers: {
+
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, amount, type, status }),
+      credentials: "include"
+
+  })
+        const data = await res.json()
+        console.log("Response data:", data) 
+       if (res.status >= 200 & res.status <= 209) {
+          console.log("New User Registered.")
+          console.log(data)
+          setTransactions(data)
+          setIsDepositSuccess(true)
+                 
+              }
+  
+              const error = { ...data }
+              throw error
+
+  }
+
 
   // Wallet addresses for different cryptocurrencies
   const walletAddresses = {
@@ -81,10 +156,11 @@ export function WalletDeposit() {
           <Label htmlFor="amount">Amount (USD)</Label>
           <Input
             id="amount"
+            name="amount"
             type="number"
             placeholder="Enter amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            
+            onChange={inputChangeHandler}
           />
         </div>
         <div className="space-y-2">
@@ -111,8 +187,8 @@ export function WalletDeposit() {
           </RadioGroup>
         </div>
         <Button
-          onClick={handleDeposit}
-          disabled={!amount || isLoading}
+          onClick={handleSubmit}
+          disabled={ amount == "" || isLoading}
           className="w-full bg-green-600 hover:bg-green-700"
         >
           {isLoading ? "Processing..." : "Deposit Now"}

@@ -1,4 +1,3 @@
-"use client"
 import Link from "next/link"
 import Image from "next/image"
 import {
@@ -15,18 +14,7 @@ import {
 
 import { Button } from "@/components/ui/button"
  
-
-import { useDispatch, useSelector } from "react-redux";
-import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../features/user/userSlice";
-import { selectUserEmail,  setUserEmail } from "../features/user/userActiveEmail";
-import {selectToken, setToken} from "../features/token/tokenSlice";
-
-
 export default function LandingPage() {
-    const dispatch = useDispatch();
-    const user = useSelector(selectUser);
-    const userType = useSelector(selectUserType);
-
 
 
   return (
@@ -47,23 +35,20 @@ export default function LandingPage() {
             >
               Testimonials
             </Link>
-          
-          
+            <Link href="#pricing" className="text-sm font-medium hover:text-[hsl(var(--primary))] transition-colors">
+              Pricing
+            </Link>
+            <Link href="#faq" className="text-sm font-medium hover:text-[hsl(var(--primary))] transition-colors">
+              FAQ
+            </Link>
           </nav>
           <div className="flex items-center gap-4">
-            {user == null ?   <Link href="/login" className="text-sm font-medium hover:text-[hsl(var(--primary))] transition-colors">
+            <Link href="/login" className="text-sm font-medium hover:text-[hsl(var(--primary))] transition-colors">
               Login
             </Link>
-          : ""}
-    
-
-            {user !== null ?   <Button asChild>
-              <Link href="/dashboard">Dashboard</Link>
-            </Button> :   <Button asChild>
+            <Button asChild>
               <Link href="/signup">Get Started</Link>
-            </Button>}
-
-          
+            </Button>
           </div>
         </div>
       </header>

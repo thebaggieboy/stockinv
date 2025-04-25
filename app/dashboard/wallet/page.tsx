@@ -24,61 +24,120 @@ import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "..
 import { selectUserEmail,  setUserEmail } from "../../../features/user/userActiveEmail";
 import {selectToken, setToken} from "../../../features/token/tokenSlice";
 import { useSelector } from "react-redux"
+import { WalletWithdraw } from "@/components/wallet-withdraw"
+import { WalletReceive } from "@/components/wallet-receive"
+import { WalletSend } from "@/components/wallet-send"
 
 export default function WalletPage() {
   const router = useRouter()
    const [wallets, setWallets] = useState([]);
    const [btcBalance, setBtcBalance] = useState([]);
+   const [transactions, setTransactions] = useState([]);
     const user = useSelector(selectUser);
+
+    const usdAmount = wallets.balance;
+      // Format date function
+const formatDate = (dateString) => {
+  if (!dateString) return "N/A";
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric', 
+    year: 'numeric' 
+  });
+};
+
+  useEffect(() => {
+    async function fetchBalance(){
+      const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
+        method: "GET",
+        headers: {
+        
+            "Content-Type": "application/json"
+        },
+    })
+    
+    const data = await res.json()
+    if (res.status >= 200 & res.status <= 209) {
+      setWallets(data)
+      console.log("Wallets [STATE]: ", data);
+      convertUsdToBitcoin();
+    }
+    
+    }
+    
+    fetchBalance()
+    
+    async function convertUsdToBitcoin() {
+    
+      try {
+        // Try a different API
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const data = await response.json();
+        
+        // Calculate and display conversion
+        const btcPrice = data.bitcoin.usd;
+        const btcAmount = usdAmount / btcPrice;
+        setBtcBalance(btcAmount)
+        
+        console.log(`$${usdAmount} USD = ${btcAmount.toFixed(8)} BTC`);
+        console.log(`(Based on 1 BTC = $${btcPrice.toLocaleString()} USD)`);
+        
+        return btcAmount;
+      } catch (error) {
+        console.error('Failed to convert currency:', error);
+        return null;
+      }
+    }
+    // Call the function
+   
+    async function fetchTransaction(){
+      const res =  await fetch(`https://avantrades-api.onrender.com/api/transactions/`, {
+        method: "GET",
+        headers: {
+        
+            "Content-Type": "application/json"
+        },
+    })
+    
+    const data = await res.json()
+    if (res.status >= 200 & res.status <= 209) {
+      setTransactions(data)
+      console.log("Transactions [STATE]: ", data);
+    }
+    
+    }
+    fetchTransaction()
+
+
+
+       
+
   
-
-async function fetchBalance(){
-  const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
-    method: "GET",
-    headers: {
-    
-        "Content-Type": "application/json"
-    },
-})
-
-const data = await res.json()
-if (res.status >= 200 & res.status <= 209) {
-  setWallets(data)
-  console.log("Wallets [STATE]: ", data);
-}
- 
-// Simple function to convert $5000 to Bitcoin
-
-
-}
-
-fetchBalance()
-
-async function convertUsdToBitcoin() {
-  const usdAmount = wallets?.balance;
+  }, [btcBalance, user, usdAmount])
+  // console.log("Wallets [STATE]: ", wallets);
+  // Function to get all transactions for the current user
+const getCurrentUserTransactions = () => {
+  if (!transactions || !transactions.length) return [];
   
-  try {
-    // Try a different API
-    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-    const data = await response.json();
+  return transactions.filter(transaction => 
+    transaction.email === user[0]?.email
+  );
+};
+
+
+  const getUserTransactionsByType = (type) => {
+    if (!transactions || !transactions.length) return [];
     
-    // Calculate and display conversion
-    const btcPrice = data.bitcoin.usd;
-    const btcAmount = usdAmount / btcPrice;
-    setBtcBalance(btcAmount)
-    
-    console.log(`$${usdAmount} USD = ${btcAmount.toFixed(8)} BTC`);
-    console.log(`(Based on 1 BTC = $${btcPrice.toLocaleString()} USD)`);
-    
-    return btcAmount;
-  } catch (error) {
-    console.error('Failed to convert currency:', error);
-    return null;
-  }
-}
-// Call the function
-convertUsdToBitcoin();
-console.log("BTC Balance [STATE]: ", btcBalance);
+    return transactions.filter(transaction => 
+      transaction.email === user[0]?.email && 
+      transaction.type === type
+    );
+  };
+  
+  const userTransactions = getUserTransactionsByType('deposit');
+  console.log("User Deposits:", userTransactions);
+   
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -97,7 +156,7 @@ console.log("BTC Balance [STATE]: ", btcBalance);
         </div>
       </header>
       <main className="flex-1 bg-background">
-        <div className="dashboard-container">
+        <div className="dashboard-container p-2">
           <div className="dashboard-grid">
             <div className="dashboard-header">
               <div>
@@ -105,10 +164,7 @@ console.log("BTC Balance [STATE]: ", btcBalance);
                 <p className="dashboard-subtitle">Manage your funds and cryptocurrency deposits</p>
               </div>
               <div className="flex items-center gap-4">
-                <Button variant="outline">
-                  <Download className="mr-2 h-4 w-4" />
-                  Export History
-                </Button>
+                
               </div>
             </div>
 
@@ -127,10 +183,7 @@ console.log("BTC Balance [STATE]: ", btcBalance);
                     
                     Deposit
                   </Link>
-                  <Button variant="outline" size="sm" className="w-[48%]">
-                    <ArrowUp className="mr-2 h-4 w-4" />
-                    Withdraw
-                  </Button>
+                  <WalletWithdraw />
                 </CardFooter>
               </Card>
 
@@ -159,14 +212,8 @@ console.log("BTC Balance [STATE]: ", btcBalance);
                   <p className="dashboard-card-metric">≈ ${wallets?.balance}</p>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Button variant="outline" size="sm" className="w-[48%]">
-                    <QrCode className="mr-2 h-4 w-4" />
-                    Receive
-                  </Button>
-                  <Button variant="outline" size="sm" className="w-[48%]">
-                    <Upload className="mr-2 h-4 w-4" />
-                    Send
-                  </Button>
+                <WalletReceive cryptoType="bitcoin" initialAddress="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" />
+                <WalletSend cryptoType="bitcoin" balance={btcBalance} />
                 </CardFooter>
               </Card>
 {/* {
@@ -347,125 +394,128 @@ console.log("BTC Balance [STATE]: ", btcBalance);
                     <TabsTrigger value="all">All</TabsTrigger>
                     <TabsTrigger value="deposits">Deposits</TabsTrigger>
                     <TabsTrigger value="withdrawals">Withdrawals</TabsTrigger>
-                    <TabsTrigger value="investments">Investments</TabsTrigger>
+                    {/* {<TabsTrigger value="investments">Investments</TabsTrigger>} */}
                   </TabsList>
-{/* {                  <TabsContent value="all">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between border-b border-border pb-4">
-                        <div className="flex items-center gap-4">
-                          <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                            <ArrowDown className="h-4 w-4 text-[hsl(var(--primary))]" />
-                          </div>
-                          <div>
-                            <p className="font-medium">Deposit (Bitcoin)</p>
-                            <p className="text-sm text-muted-foreground">Apr 15, 2025</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">+$5,000.00</p>
-                          <p className="text-sm profit-text">Completed</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between border-b border-border pb-4">
-                        <div className="flex items-center gap-4">
-                          <div className="rounded-full bg-[hsl(var(--chart-blue)_/_0.2)] p-2">
-                            <Wallet className="h-4 w-4 text-[hsl(var(--chart-blue))]" />
-                          </div>
-                          <div>
-                            <p className="font-medium">Investment (Aggressive Boost Plan)</p>
-                            <p className="text-sm text-muted-foreground">Apr 14, 2025</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">-$10,000.00</p>
-                          <p className="text-sm profit-text">Completed</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between border-b border-border pb-4">
-                        <div className="flex items-center gap-4">
-                          <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                            <ArrowDown className="h-4 w-4 text-[hsl(var(--primary))]" />
-                          </div>
-                          <div>
-                            <p className="font-medium">Deposit (Ethereum)</p>
-                            <p className="text-sm text-muted-foreground">Apr 10, 2025</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">+$3,500.00</p>
-                          <p className="text-sm profit-text">Completed</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="rounded-full bg-[hsl(var(--loss)_/_0.2)] p-2">
-                            <ArrowUp className="h-4 w-4 text-[hsl(var(--loss))]" />
-                          </div>
-                          <div>
-                            <p className="font-medium">Withdrawal (Bank Transfer)</p>
-                            <p className="text-sm text-muted-foreground">Apr 5, 2025</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">-$2,000.00</p>
-                          <p className="text-sm profit-text">Completed</p>
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
+
+
+                  <TabsContent value="all">
+    <div className="space-y-4">
+      {getCurrentUserTransactions().length > 0 ? (
+        // Sort by date (newest first) before mapping
+        getCurrentUserTransactions()
+          .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+          .map((transaction, index) => {
+            const isDeposit = transaction.type === "deposit";
+            
+            return (
+              <div key={index} className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0">
+                <div className="flex items-center gap-4">
+                  <div className={`rounded-full ${isDeposit ? "bg-[hsl(var(--primary)_/_0.2)]" : "bg-red-100"} p-2`}>
+                    {isDeposit ? (
+                      <ArrowDown className="h-4 w-4 text-[hsl(var(--primary))]" />
+                    ) : (
+                      <ArrowUp className="h-4 w-4 text-red-500" />
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-medium">
+                      {isDeposit ? "Deposit" : "Withdrawal"} ({transaction.cryptoType || "Bitcoin"})
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {formatDate(transaction.createdAt) || "Recent"}
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className="font-medium">
+                    {isDeposit ? "+" : "-"}${Number(transaction.amount).toFixed(2)}
+                  </p>
+                  <p className={`text-sm ${
+                    transaction.status === "completed" ? "text-green-500" : 
+                    transaction.status === "rejected" ? "text-red-500" : "text-yellow-500"
+                  }`}>
+                    {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
+                  </p>
+                </div>
+              </div>
+            );
+          })
+      ) : (
+        <div className="text-center py-8 text-muted-foreground">
+          No transactions found
+        </div>
+      )}
+    </div>
+  </TabsContent>
+
                   <TabsContent value="deposits">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between border-b border-border pb-4">
-                        <div className="flex items-center gap-4">
-                          <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                            <ArrowDown className="h-4 w-4 text-[hsl(var(--primary))]" />
-                          </div>
-                          <div>
-                            <p className="font-medium">Deposit (Bitcoin)</p>
-                            <p className="text-sm text-muted-foreground">Apr 15, 2025</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">+$5,000.00</p>
-                          <p className="text-sm profit-text">Completed</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                            <ArrowDown className="h-4 w-4 text-[hsl(var(--primary))]" />
-                          </div>
-                          <div>
-                            <p className="font-medium">Deposit (Ethereum)</p>
-                            <p className="text-sm text-muted-foreground">Apr 10, 2025</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">+$3,500.00</p>
-                          <p className="text-sm profit-text">Completed</p>
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="withdrawals">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="rounded-full bg-[hsl(var(--loss)_/_0.2)] p-2">
-                            <ArrowUp className="h-4 w-4 text-[hsl(var(--loss))]" />
-                          </div>
-                          <div>
-                            <p className="font-medium">Withdrawal (Bank Transfer)</p>
-                            <p className="text-sm text-muted-foreground">Apr 5, 2025</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">-$2,000.00</p>
-                          <p className="text-sm profit-text">Completed</p>
-                        </div>
-                      </div>
-                    </div>
-                  </TabsContent>
+    <div className="space-y-4">
+      {getUserTransactionsByType("deposit").length > 0 ? (
+        getUserTransactionsByType("deposit").map((transaction, index) => (
+          <div key={index} className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0">
+            <div className="flex items-center gap-4">
+              <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
+                <ArrowDown className="h-4 w-4 text-[hsl(var(--primary))]" />
+              </div>
+              <div>
+                <p className="font-medium">Deposit ({transaction.cryptoType || "Bitcoin"})</p>
+                <p className="text-sm text-muted-foreground">
+                  {formatDate(transaction.createdAt) || "Recent"}
+                </p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="font-medium">+${Number(transaction.amount).toFixed(2)}</p>
+              <p className={`text-sm ${transaction.status === "completed" ? "text-green-500" : "text-yellow-500"}`}>
+                {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
+              </p>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="text-center py-8 text-muted-foreground">
+          No deposit transactions found
+        </div>
+      )}
+    </div>
+  </TabsContent>
+
+            
+                
+  <TabsContent value="withdrawals">
+    <div className="space-y-4">
+      {getUserTransactionsByType("withdraw").length > 0 ? (
+        getUserTransactionsByType("withdraw").map((transaction, index) => (
+          <div key={index} className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0">
+            <div className="flex items-center gap-4">
+              <div className="rounded-full bg-red-100 p-2">
+                <ArrowUp className="h-4 w-4 text-red-500" />
+              </div>
+              <div>
+                <p className="font-medium">Withdrawal ({transaction.cryptoType || "Bitcoin"})</p>
+                <p className="text-sm text-muted-foreground">
+                  {formatDate(transaction.createdAt) || "Recent"}
+                </p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="font-medium">-${Number(transaction.amount).toFixed(2)}</p>
+              <p className={`text-sm ${
+                transaction.status === "completed" ? "text-green-500" : 
+                transaction.status === "rejected" ? "text-red-500" : "text-yellow-500"
+              }`}>
+                {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
+              </p>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="text-center py-8 text-muted-foreground">
+          No withdrawal transactions found
+        </div>
+      )}
+    </div>
+  </TabsContent>
                   <TabsContent value="investments">
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
@@ -484,7 +534,11 @@ console.log("BTC Balance [STATE]: ", btcBalance);
                         </div>
                       </div>
                     </div>
-                  </TabsContent>} */}
+                  </TabsContent> 
+
+
+
+
                 </Tabs>
               </CardContent>
               <CardFooter>
