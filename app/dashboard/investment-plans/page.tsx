@@ -228,10 +228,10 @@ export default function InvestmentPlansPage() {
                       <tr>
                         <td className="font-medium">Ultimate Prosperity</td>
                         <td>$50,000</td>
-                        <td>1 Weeks</td>
+                        <td>1 Week</td>
                         <td>$15,000</td>
-                        <td>12.29%</td>
-                        <td>$80,000</td>
+                        <td>129.29%</td>
+                        <td>$92,805</td>
                       </tr>
                     </tbody>
                   </table>
