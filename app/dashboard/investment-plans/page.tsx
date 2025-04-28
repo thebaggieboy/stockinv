@@ -14,8 +14,8 @@ export default function InvestmentPlansPage() {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-6 w-6 text-[hsl(var(--primary))]" />
-            <span className="text-xl font-bold">StockGrowth</span>
+            <TrendingUp className="h-6 w-6 pl-2 text-[hsl(var(--primary))]" />
+            <span className="text-xl font-bold">Bluevest</span>
           </div>
           <DashboardNav />
           <div className="flex items-center gap-4">
@@ -243,7 +243,7 @@ export default function InvestmentPlansPage() {
       </main>
       <footer className="border-t border-border py-6">
         <div className="container flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">© 2025 StockGrowth. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">© 2025 Bluevest. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="#" className="text-sm text-muted-foreground hover:text-[hsl(var(--primary))]">
               Terms

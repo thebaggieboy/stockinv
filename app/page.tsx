@@ -34,8 +34,8 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 w-full border-b border-zinc-800 bg-black/95 backdrop-blur supports-[backdrop-filter]:bg-black/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-6 w-6 text-[hsl(var(--primary))]" />
-            <span className="text-xl font-bold">StockGrowth</span>
+            <TrendingUp className="h-6 w-6 pl-2 text-[hsl(var(--primary))]" />
+           <Link href="/"> <span className="text-xl font-bold">Bluevest</span></Link>
           </div>
           <nav className="hidden md:flex gap-6">
             <Link href="#features" className="text-sm font-medium hover:text-[hsl(var(--primary))] transition-colors">
@@ -75,7 +75,7 @@ export default function LandingPage() {
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
                     Maximize Your Investment Returns with{" "}
-                    <span className="text-[hsl(var(--primary))]">StockGrowth</span>
+                    <span className="text-[hsl(var(--primary))]">Bluevest</span>
                   </h1>
                   <p className="max-w-[600px] text-zinc-400 md:text-xl">
                     Our platform offers advanced stock analysis, real-time ROI tracking, and secure crypto deposits to
@@ -554,7 +554,7 @@ export default function LandingPage() {
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-6 w-6 text-[hsl(var(--primary))]" />
-                <span className="text-xl font-bold">StockGrowth</span>
+                <span className="text-xl font-bold">Bluevest</span>
               </div>
               <p className="text-sm text-zinc-400 max-w-[300px]">
                 Empowering investors with advanced tools, real-time analytics, and secure crypto deposits.
@@ -664,7 +664,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex flex-col gap-6 border-t border-zinc-800 pt-6 text-sm text-zinc-400 lg:flex-row lg:justify-between lg:pt-8">
-            <p>© 2025 StockGrowth. All rights reserved.</p>
+            <p>© 2025 Bluevest. All rights reserved.</p>
             <div className="flex gap-4">
               <Link href="#" className="hover:text-[hsl(var(--primary))]">
                 Twitter

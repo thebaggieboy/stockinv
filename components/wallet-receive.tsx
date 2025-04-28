@@ -16,7 +16,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
+import { useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from "react-redux";
+import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../features/user/userSlice";
 export function WalletReceive({
   cryptoType = "bitcoin",
   initialAddress = "",
@@ -24,7 +26,17 @@ export function WalletReceive({
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [selectedCrypto, setSelectedCrypto] = useState(cryptoType)
-  const [amount, setAmount] = useState("")
+ 
+    const [isLoading, setIsLoading] = useState(false)
+    const [isDeposit, setIsDeposit] = useState(false)
+    const [isWithdraw, setIsWithdraw] = useState(false)
+    const [isTransaction, setIsTransaction] = useState(false)
+    const [isDepositSuccess, setIsDepositSuccess] = useState(false)
+    const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false)
+    const [transactions, setTransactions] = useState([])
+    const dispatch = useDispatch();
+    const router = useRouter();
+    const user = useSelector(selectUser);
 
   // Wallet addresses for different cryptocurrencies
   const walletAddresses = {
@@ -59,12 +71,78 @@ export function WalletReceive({
     return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${protocol}:${address}${amountParam}`
   }
 
+  
+    const [formData, setFormData] = useState({
+        email:user[0].email,  
+        amount: "",
+        type: "deposit",
+        status: "pending",	
+         
+      })
+      
+const { email, amount, type, status } = formData
+
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target
+    setFormData((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value
+      }
+    })
+
+  }
+
+ 
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    console.log("Form submitted:", formData)
+    // Perform your deposit logic here
+    // For example, you can send the data to your server or API
+    handleDeposit();
+    setOpen(false)
+    const res = await fetch("https://avantrades-api.onrender.com/api/transactions/", {
+      method: "POST",
+      headers: {
+
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, amount, type, status }),
+      credentials: "include"
+
+  })
+        const data = await res.json()
+        console.log("Response data:", data) 
+       if (res.status >= 200 & res.status <= 209) {
+          console.log("New User Registered.")
+          console.log(data)
+          setTransactions(data)
+          setIsDepositSuccess(true)
+                 
+              }
+  
+              const error = { ...data }
+              throw error
+
+  }
+
+ 
+  const handleDeposit = () => {
+    setIsLoading(true)
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false)
+      alert(`Successfully initiated deposit of ${amount} using ${cryptoType}`)
+      setAmount("")
+    }, 1500)
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="w-[48%]">
           <QrCode className="mr-2 h-4 w-4" />
-          Receive
+          Deposit
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
@@ -100,10 +178,12 @@ export function WalletReceive({
             <Label htmlFor="amount">Amount (Optional)</Label>
             <Input
               id="amount"
+              
+              name="amount"
               type="number"
               placeholder="Enter amount"
               value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              onChange={inputChangeHandler}
             />
             <p className="text-xs text-muted-foreground">Specifying an amount will include it in the QR code.</p>
           </div>
@@ -112,7 +192,7 @@ export function WalletReceive({
             <Label htmlFor="address">Deposit Address</Label>
             <div className="flex items-center space-x-2">
               <div className="relative flex-1">
-                <Input id="address" value={address} readOnly className="pr-10 font-mono text-sm" />
+                <Input id="address" name="address" value={address} readOnly className="pr-10 font-mono text-sm" />
                 <Button
                   type="button"
                   variant="ghost"
@@ -132,8 +212,8 @@ export function WalletReceive({
           </div>
         </div>
         <DialogFooter className="sm:justify-center">
-          <Button variant="outline" onClick={() => setOpen(false)}>
-            Close
+          <Button variant="outline" onClick={handleSubmit}>
+            Done
           </Button>
         </DialogFooter>
       </DialogContent>

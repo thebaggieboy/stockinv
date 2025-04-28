@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ArrowUp, Check, CreditCard, Wallet } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -23,7 +23,9 @@ import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "..
 import { selectUserEmail,  setUserEmail } from "../features/user/userActiveEmail";
 export function WalletWithdraw() {
   
-  const [withdrawMethod, setWithdrawMethod] = useState("bank")
+  const [withdrawMethod, setWithdrawMethod] = useState("crypto")
+  const [wallets, setWallets] = useState([]);
+  const [btcBalance, setBtcBalance] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -37,14 +39,87 @@ export function WalletWithdraw() {
     const router = useRouter();
     const user = useSelector(selectUser);
    
-  
-    function createTransaction(){
-      console.log("Creating transaction...")
-      // Simulate API call
-  
-  
+    const usdAmount = wallets.balance;
+    // Format date function
+const formatDate = (dateString) => {
+if (!dateString) return "N/A";
+const date = new Date(dateString);
+return date.toLocaleDateString('en-US', { 
+  month: 'short', 
+  day: 'numeric', 
+  year: 'numeric' 
+});
+};
+  useEffect(() => {
+    async function fetchBalance(){
+      const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
+        method: "GET",
+        headers: {
+        
+            "Content-Type": "application/json"
+        },
+    })
+    
+    const data = await res.json()
+    if (res.status >= 200 & res.status <= 209) {
+      setWallets(data)
+      console.log("Wallets [STATE]: ", data);
+      convertUsdToBitcoin();
     }
+    
+    }
+    
+    fetchBalance()
+    
+    async function convertUsdToBitcoin() {
+    
+      try {
+        // Try a different API
+        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+        const data = await response.json();
+        
+        // Calculate and display conversion
+        const btcPrice = data.bitcoin.usd;
+        const btcAmount = usdAmount / btcPrice;
+        setBtcBalance(btcAmount)
+        
+        console.log(`$${usdAmount} USD = ${btcAmount.toFixed(8)} BTC`);
+        console.log(`(Based on 1 BTC = $${btcPrice.toLocaleString()} USD)`);
+        
+        return btcAmount;
+      } catch (error) {
+        console.error('Failed to convert currency:', error);
+        return null;
+      }
+    }
+    // Call the function
+   
+    async function fetchTransaction(){
+      const res =  await fetch(`https://avantrades-api.onrender.com/api/transactions/`, {
+        method: "GET",
+        headers: {
+        
+            "Content-Type": "application/json"
+        },
+    })
+    
+    const data = await res.json()
+    if (res.status >= 200 & res.status <= 209) {
+      setTransactions(data)
+      console.log("Transactions [STATE]: ", data);
+    }
+    
+    }
+    fetchTransaction()
+
+
+
+       
+
   
+  }, [btcBalance, user, usdAmount])
+  // console.log("Wallets [STATE]: ", wallets);
+  // Function to get all transactions for the current user
       const [formData, setFormData] = useState({
           email:user[0].email,  
           amount: "",
@@ -99,12 +174,16 @@ export function WalletWithdraw() {
   
     }
   
-
+ 
   const handleWithdraw = () => {
     setIsLoading(true)
-    // Simulate API call
+
+
     setTimeout(() => {
+          // Simulate API call
+  
       setIsLoading(false)
+  
       setSuccess(true)
       // Reset and close after showing success
       setTimeout(() => {
@@ -114,6 +193,33 @@ export function WalletWithdraw() {
       }, 2000)
     }, 1500)
   }
+
+
+
+
+
+  const getCurrentUserTransactions = () => {
+    if (!transactions || !transactions.length) return [];
+    
+    return transactions.filter(transaction => 
+      transaction.email === user[0]?.email
+    );
+  };
+  
+  
+    const getUserTransactionsByType = (type) => {
+      if (!transactions || !transactions.length) return [];
+      
+      return transactions.filter(transaction => 
+        transaction.email === user[0]?.email && 
+        transaction.type === type
+      );
+    };
+    
+    
+    const userTransactions = getUserTransactionsByType('deposit');
+    console.log("User Deposits:", userTransactions);
+     
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -151,12 +257,12 @@ export function WalletWithdraw() {
                   value={amount}
                   onChange={inputChangeHandler}
                 />
-                <p className="text-xs text-muted-foreground">Available balance: $12,234.00</p>
+                <p className="text-xs text-muted-foreground">Available balance: ${wallets?.balance}</p>
               </div>
               <div className="space-y-2">
                 <Label>Withdrawal Method</Label>
                 <RadioGroup defaultValue="bank" onValueChange={setWithdrawMethod}>
-                  <div className="flex items-center space-x-2 rounded-md border p-3">
+             {/* {     <div className="flex items-center space-x-2 rounded-md border p-3">
                     <RadioGroupItem value="bank" id="bank" />
                     <Label htmlFor="bank" className="flex-1 cursor-pointer">
                       <div className="flex items-center gap-2">
@@ -164,7 +270,8 @@ export function WalletWithdraw() {
                         <span>Bank Transfer</span>
                       </div>
                     </Label>
-                  </div>
+                  </div>} */}
+                  
                   <div className="flex items-center space-x-2 rounded-md border p-3">
                     <RadioGroupItem value="crypto" id="crypto" />
                     <Label htmlFor="crypto" className="flex-1 cursor-pointer">
@@ -176,7 +283,7 @@ export function WalletWithdraw() {
                   </div>
                 </RadioGroup>
               </div>
-
+{/* {
               {withdrawMethod === "bank" && (
                 <div className="space-y-2">
                   <Label htmlFor="bank-account">Bank Account</Label>
@@ -191,7 +298,7 @@ export function WalletWithdraw() {
                     </SelectContent>
                   </Select>
                 </div>
-              )}
+              )}} */}
 
               {withdrawMethod === "crypto" && (
                 <div className="space-y-2">

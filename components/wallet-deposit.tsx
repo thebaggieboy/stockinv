@@ -42,7 +42,7 @@ export function WalletDeposit() {
         status: "pending",	
          
       })
-      // Handle form submission
+      
 const { email, amount, type, status } = formData
 
   const inputChangeHandler = (e) => {

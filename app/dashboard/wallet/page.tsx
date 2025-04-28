@@ -135,6 +135,7 @@ const getCurrentUserTransactions = () => {
     );
   };
   
+  
   const userTransactions = getUserTransactionsByType('deposit');
   console.log("User Deposits:", userTransactions);
    
@@ -143,8 +144,8 @@ const getCurrentUserTransactions = () => {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-6 w-6 text-[hsl(var(--primary))]" />
-            <span className="text-xl font-bold">StockGrowth</span>
+            <TrendingUp className="h-6 w-6 pl-2 text-[hsl(var(--primary))]" />
+            <span className="text-xl font-bold">Bluevest</span>
           </div>
           <DashboardNav />
           <div className="flex items-center gap-4">
@@ -179,10 +180,7 @@ const getCurrentUserTransactions = () => {
                   <p className="dashboard-card-metric">Ready to invest</p>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <Link  href={"#deposit_funds"} style={{transition:"1", backgroundColor:"white", color:"black"}}   variant="outline" size="sm"  className="w-[48%] p-1 rounded-md text-center bold">
-                    
-                    Deposit
-                  </Link>
+                <WalletReceive cryptoType="bitcoin" initialAddress="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" />
                   <WalletWithdraw />
                 </CardFooter>
               </Card>
@@ -212,8 +210,8 @@ const getCurrentUserTransactions = () => {
                   <p className="dashboard-card-metric">≈ ${wallets?.balance}</p>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                <WalletReceive cryptoType="bitcoin" initialAddress="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh" />
-                <WalletSend cryptoType="bitcoin" balance={btcBalance} />
+                
+              {/* {  <WalletSend cryptoType="bitcoin" balance={btcBalance} />} */}
                 </CardFooter>
               </Card>
 {/* {
@@ -266,17 +264,8 @@ const getCurrentUserTransactions = () => {
               </Card>} */}
             </div>
 
-            <div  className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 mt-6">
-              <Card className="dashboard-card" >
-                <CardHeader>
-                  <CardTitle id="deposit_funds">Deposit Funds</CardTitle>
-                  <CardDescription>Add funds to your account using cryptocurrency</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <WalletDeposit />
-                </CardContent>
-              </Card>
-
+            <div  className="grid gap-6 md:grid-cols-1 lg:grid-cols-1 mt-6">
+           
               <Card className="dashboard-card">
                 <CardHeader>
                   <CardTitle>Wallet Addresses</CardTitle>
@@ -304,7 +293,7 @@ const getCurrentUserTransactions = () => {
                       <span className="font-medium">Bitcoin (BTC)</span>
                     </div>
                     <div className="wallet-address">
-                     <span>bc1qlf5nr2zem75e6ewqxewzszdvpxxezpefgwzcu6</span>
+                     <span>bc1qrdh4r750mr3keefl8xx6z3866r5gurrsn3gzfc</span>
                       
                       <Button variant="ghost" size="icon" className="h-8 w-8">
                         <Copy className="h-4 w-4" />
@@ -358,6 +347,50 @@ const getCurrentUserTransactions = () => {
 
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
+                      <div className="rounded-full bg-[#627EEA] p-1">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M11.9978 0L11.8799 0.399V16.4035L11.9978 16.5213L19.3641 12.2005L11.9978 0Z"
+                            fill="white"
+                          />
+                          <path
+                            d="M11.9978 0L4.63147 12.2005L11.9978 16.5213V8.8488V0Z"
+                            fill="white"
+                            fillOpacity="0.8"
+                          />
+                          <path
+                            d="M11.9978 17.9037L11.9308 17.9857V23.5542L11.9978 23.7498L19.3688 13.5852L11.9978 17.9037Z"
+                            fill="white"
+                          />
+                          <path
+                            d="M11.9978 23.7498V17.9037L4.63147 13.5852L11.9978 23.7498Z"
+                            fill="white"
+                            fillOpacity="0.8"
+                          />
+                          <path
+                            d="M11.9978 16.5213L19.3641 12.2005L11.9978 8.8488V16.5213Z"
+                            fill="white"
+                            fillOpacity="0.5"
+                          />
+                          <path
+                            d="M4.63147 12.2005L11.9978 16.5213V8.8488L4.63147 12.2005Z"
+                            fill="white"
+                            fillOpacity="0.3"
+                          />
+                        </svg>
+                      </div>
+                      <span className="font-medium">USDT (TETHER)</span>
+                    </div>
+                    <div className="wallet-address">
+                      <span>0xdd6FA788B8dbcb887eFa07B10f0026c695a4535C</span>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
                       <div className="rounded-full bg-[#2775CA] p-1">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path
@@ -373,7 +406,31 @@ const getCurrentUserTransactions = () => {
                       <span className="font-medium">USD Coin (USDC)</span>
                     </div>
                     <div className="wallet-address">
-                      <span>0x742d35Cc6634C0532925a3b844Bc454e4438f44e</span>
+                      <span>0xdd6FA788B8dbcb887eFa07B10f0026c695a4535C</span>
+                      <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <div className="rounded-full bg-[#2775CA] p-1">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z"
+                            fill="white"
+                          />
+                          <path
+                            d="M15.9 14.25C15.9 12.15 14.55 11.4 11.85 11.1C9.75 10.8 9.3 10.35 9.3 9.45C9.3 8.55 9.9 7.95 11.4 7.95C12.75 7.95 13.35 8.4 13.65 9.3C13.8 9.6 14.1 9.75 14.4 9.75H15C15.45 9.75 15.75 9.45 15.75 9C15.6 7.65 14.55 6.45 13.05 6.15V4.95C13.05 4.5 12.75 4.2 12.3 4.2H11.7C11.25 4.2 10.95 4.5 10.95 4.95V6.15C9 6.45 7.65 7.8 7.65 9.6C7.65 11.55 8.85 12.45 11.55 12.75C13.5 13.05 14.25 13.35 14.25 14.4C14.25 15.45 13.35 16.2 12 16.2C10.2 16.2 9.6 15.45 9.45 14.55C9.3 14.1 9.15 14.1 8.7 14.1H8.1C7.65 14.1 7.35 14.4 7.35 14.85C7.5 16.5 8.55 17.85 10.95 18.15V19.35C10.95 19.8 11.25 20.1 11.7 20.1H12.3C12.75 20.1 13.05 19.8 13.05 19.35V18.15C15 17.85 15.9 16.35 15.9 14.25Z"
+                            fill="#2775CA"
+                          />
+                        </svg>
+                      </div>
+                      <span className="font-medium">Solana (SOL)</span>
+                    </div>
+                    <div className="wallet-address">
+                      <span>GLM6j7THiJmbL7sGu9ASynnn4JrH9x4UTz61kaWJmxWq</span>
                       <Button variant="ghost" size="icon" className="h-8 w-8">
                         <Copy className="h-4 w-4" />
                       </Button>
@@ -552,7 +609,7 @@ const getCurrentUserTransactions = () => {
       </main>
       <footer className="border-t border-border py-6">
         <div className="container flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">© 2025 StockGrowth. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">© 2025 Bluevest. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="#" className="text-sm text-muted-foreground hover:text-[hsl(var(--primary))]">
               Terms

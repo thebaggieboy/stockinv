@@ -18,11 +18,11 @@ export function DashboardNav() {
       href: "/dashboard/investment-plans",
       icon: LineChart,
     },
-    {
-      name: "Portfolio",
-      href: "/dashboard/portfolio",
-      icon: BarChart3,
-    },
+//  {   {
+//       name: "Portfolio",
+//       href: "/dashboard/portfolio",
+//       icon: BarChart3,
+//     },}
     {
       name: "Wallet",
       href: "/dashboard/wallet",
