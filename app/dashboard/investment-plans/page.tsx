@@ -187,7 +187,7 @@ export default function InvestmentPlansPage() {
                         <th>Plan</th>
                         <th>Minimum</th>
                         <th>Duration</th>
-                        <th>Daily Interest</th>
+                        <th>Weekly Interest</th>
                         <th>Total ROI</th>
                         <th>Final Amount</th>
                       </tr>
@@ -195,42 +195,42 @@ export default function InvestmentPlansPage() {
                     <tbody>
                       <tr>
                         <td className="font-medium">Quick Gain</td>
-                        <td>$1,000</td>
-                        <td>2 Weeks</td>
-                        <td>$357.14</td>
-                        <td>400%</td>
-                        <td>$5,000</td>
+                        <td>$100</td>
+                        <td>1 Week</td>
+                        <td>$20</td>
+                        <td>86.6%</td>
+                        <td>$86</td>
                       </tr>
                       <tr>
                         <td className="font-medium">Rapid Growth</td>
-                        <td>$5,000</td>
-                        <td>2 Weeks</td>
-                        <td>$1,785.71</td>
-                        <td>400%</td>
-                        <td>$25,000</td>
+                        <td>$1,000</td>
+                        <td>1 Week</td>
+                        <td>$250</td>
+                        <td>108.25%</td>
+                        <td>$1441.41</td>
                       </tr>
                       <tr className="dashboard-table-row-highlight">
                         <td className="font-medium">Aggressive Boost</td>
                         <td>$10,000</td>
-                        <td>2 Weeks</td>
-                        <td>$3,571.43</td>
-                        <td>300%</td>
-                        <td>$40,000</td>
+                        <td>1 Week</td>
+                        <td>$2500</td>
+                        <td>108.25%</td>
+                        <td>$14,414</td>
                       </tr>
                       <tr>
                         <td className="font-medium">Accelerated Wealth</td>
-                        <td>$15,000</td>
-                        <td>2 Weeks</td>
-                        <td>$5,357.14</td>
-                        <td>333.33%</td>
-                        <td>$65,000</td>
+                        <td>$20,000</td>
+                        <td>1 Week</td>
+                        <td>$6000</td>
+                        <td>129.9%</td>
+                        <td>$37,122</td>
                       </tr>
                       <tr>
                         <td className="font-medium">Ultimate Prosperity</td>
-                        <td>$20,000</td>
-                        <td>2 Weeks</td>
-                        <td>$7,142.86</td>
-                        <td>300%</td>
+                        <td>$50,000</td>
+                        <td>1 Weeks</td>
+                        <td>$15,000</td>
+                        <td>12.29%</td>
                         <td>$80,000</td>
                       </tr>
                     </tbody>
