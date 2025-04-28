@@ -188,8 +188,8 @@ export default function InvestmentPlansPage() {
                         <th>Minimum</th>
                         <th>Duration</th>
                         <th>Weekly Interest</th>
-                        <th>Total ROI</th>
-                        <th>Final Amount</th>
+                        <th>Total ROI(Monthly)</th>
+                        <th>Final Amount(Monthly)</th>
                       </tr>
                     </thead>
                     <tbody>
