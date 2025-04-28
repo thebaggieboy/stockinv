@@ -348,36 +348,10 @@ const getCurrentUserTransactions = () => {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="rounded-full bg-[#627EEA] p-1">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M11.9978 0L11.8799 0.399V16.4035L11.9978 16.5213L19.3641 12.2005L11.9978 0Z"
-                            fill="white"
-                          />
-                          <path
-                            d="M11.9978 0L4.63147 12.2005L11.9978 16.5213V8.8488V0Z"
-                            fill="white"
-                            fillOpacity="0.8"
-                          />
-                          <path
-                            d="M11.9978 17.9037L11.9308 17.9857V23.5542L11.9978 23.7498L19.3688 13.5852L11.9978 17.9037Z"
-                            fill="white"
-                          />
-                          <path
-                            d="M11.9978 23.7498V17.9037L4.63147 13.5852L11.9978 23.7498Z"
-                            fill="white"
-                            fillOpacity="0.8"
-                          />
-                          <path
-                            d="M11.9978 16.5213L19.3641 12.2005L11.9978 8.8488V16.5213Z"
-                            fill="white"
-                            fillOpacity="0.5"
-                          />
-                          <path
-                            d="M4.63147 12.2005L11.9978 16.5213V8.8488L4.63147 12.2005Z"
-                            fill="white"
-                            fillOpacity="0.3"
-                          />
-                        </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16" height="16" viewBox="0 0 48 48">
+<polygon fill="#4db6ac" points="24,44 2,22.5 10,5 38,5 46,22.5"></polygon><path fill="#fff" d="M38,22c0-1.436-4.711-2.635-11-2.929V16h8v-6H13v6h8v3.071C14.711,19.365,10,20.564,10,22	s4.711,2.635,11,2.929V36h6V24.929C33.289,24.635,38,23.436,38,22z M24,24c-6.627,0-12-1.007-12-2.25c0-1.048,3.827-1.926,9-2.176	v3.346c0.96,0.06,1.96,0.08,3,0.08s2.04-0.02,3-0.08v-3.346c5.173,0.25,9,1.128,9,2.176C36,22.993,30.627,24,24,24z"></path>
+</svg>
+               
                       </div>
                       <span className="font-medium">USDT (TETHER)</span>
                     </div>
@@ -416,17 +390,8 @@ const getCurrentUserTransactions = () => {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="rounded-full bg-[#2775CA] p-1">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z"
-                            fill="white"
-                          />
-                          <path
-                            d="M15.9 14.25C15.9 12.15 14.55 11.4 11.85 11.1C9.75 10.8 9.3 10.35 9.3 9.45C9.3 8.55 9.9 7.95 11.4 7.95C12.75 7.95 13.35 8.4 13.65 9.3C13.8 9.6 14.1 9.75 14.4 9.75H15C15.45 9.75 15.75 9.45 15.75 9C15.6 7.65 14.55 6.45 13.05 6.15V4.95C13.05 4.5 12.75 4.2 12.3 4.2H11.7C11.25 4.2 10.95 4.5 10.95 4.95V6.15C9 6.45 7.65 7.8 7.65 9.6C7.65 11.55 8.85 12.45 11.55 12.75C13.5 13.05 14.25 13.35 14.25 14.4C14.25 15.45 13.35 16.2 12 16.2C10.2 16.2 9.6 15.45 9.45 14.55C9.3 14.1 9.15 14.1 8.7 14.1H8.1C7.65 14.1 7.35 14.4 7.35 14.85C7.5 16.5 8.55 17.85 10.95 18.15V19.35C10.95 19.8 11.25 20.1 11.7 20.1H12.3C12.75 20.1 13.05 19.8 13.05 19.35V18.15C15 17.85 15.9 16.35 15.9 14.25Z"
-                            fill="#2775CA"
-                          />
-                        </svg>
-                      </div>
+                      <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 64 64" width="16px" height="16px" baseProfile="basic"><linearGradient id="2xyP8ITvw2AyN9J62dUAba" x1="32" x2="32" y1="17.936" y2="43.068" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#6dc7ff"/><stop offset="1" stop-color="#e6abff"/></linearGradient><path fill="url(#2xyP8ITvw2AyN9J62dUAba)" d="M41.806,25H17.032l5.161-6h24.774L41.806,25z M17.032,45h24.774l5.161-6H22.194L17.032,45z M17.032,29l5.161,6h24.774l-5.161-6H17.032z"/><linearGradient id="2xyP8ITvw2AyN9J62dUAbb" x1="32" x2="32" y1="8.553" y2="55.331" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1a6dff"/><stop offset="1" stop-color="#c822ff"/></linearGradient><path fill="url(#2xyP8ITvw2AyN9J62dUAbb)" d="M32,58C17.663,58,6,46.337,6,32	C6,17.664,17.663,6,32,6s26,11.664,26,26C58,46.337,46.337,58,32,58z M32,8C18.767,8,8,18.767,8,32s10.767,24,24,24s24-10.767,24-24	S45.233,8,32,8z"/></svg>
+              </div>
                       <span className="font-medium">Solana (SOL)</span>
                     </div>
                     <div className="wallet-address">

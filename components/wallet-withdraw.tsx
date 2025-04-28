@@ -143,37 +143,46 @@ return date.toLocaleDateString('en-US', {
   
   // Function to filter transactions by current user's email
   
-    const handleSubmit = async(e) => {
-      e.preventDefault()
-      console.log("Form submitted:", formData)
-      // Perform your deposit logic here
-      // For example, you can send the data to your server or API
-      handleWithdraw();
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    console.log("Form submitted:", formData)
+    
+    try {
       const res = await fetch("https://avantrades-api.onrender.com/api/transactions/", {
         method: "POST",
         headers: {
-  
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, amount, type, status }),
         credentials: "include"
-  
-    })
-          const data = await res.json()
-          console.log("Response data:", data) 
-         if (res.status >= 200 & res.status <= 209) {
-            console.log("New User Registered.")
-            console.log(data)
-            setTransactions(data)
-            setIsWithdrawSuccess(true)
-                   
-                }
-    
-                const error = { ...data }
-                throw error
-  
+      })
+      
+      const data = await res.json()
+      console.log("Response data:", data) 
+      
+      if (res.status >= 200 && res.status <= 209) {
+        console.log("New Withdrawal Registered.")
+        console.log(data)
+        
+        // Properly update the wallet state with the new balance
+        const newBalance = parseFloat(wallets.balance) - parseFloat(amount)
+        setWallets({ ...wallets, balance: newBalance })
+        
+        console.log("New Balance:", newBalance)
+        console.log("Previous Balance:", wallets?.balance)
+        
+        setTransactions(data)
+        setIsWithdrawSuccess(true)
+        handleWithdraw()
+      } else {
+        const error = { ...data }
+        throw error
+      }
+    } catch (error) {
+      console.error("Withdrawal failed:", error)
+      // Handle error state here
     }
-  
+  }
  
   const handleWithdraw = () => {
     setIsLoading(true)
@@ -189,7 +198,7 @@ return date.toLocaleDateString('en-US', {
       setTimeout(() => {
         setSuccess(false)
         setOpen(false)
-        setAmount("")
+
       }, 2000)
     }, 1500)
   }

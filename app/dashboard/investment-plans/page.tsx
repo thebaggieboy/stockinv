@@ -45,19 +45,19 @@ export default function InvestmentPlansPage() {
                   <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
                     <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
                   </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">2 Weeks</div>
+                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
                 </div>
                 <h3 className="text-xl font-bold">Quick Gain Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$1,000</div>
+                <div className="mt-2 text-3xl font-bold">$100 - $1000</div>
                 <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
                 <div className="mt-6 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Daily Interest:</span>
-                    <span className="font-medium">$357.14 (35.71% monthly)</span>
+                    <span>Weekly Interest:</span>
+                    <span className="font-medium">20% Weekly</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Cumulative ROI:</span>
-                    <span className="font-medium">400% ($5,000)</span>
+                    <span className="font-medium">86.6% monthly </span>
                   </div>
                 </div>
                 <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
@@ -68,19 +68,19 @@ export default function InvestmentPlansPage() {
                   <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
                     <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
                   </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">2 Weeks</div>
+                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
                 </div>
                 <h3 className="text-xl font-bold">Rapid Growth Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$5,000</div>
+                <div className="mt-2 text-3xl font-bold">$1000 - 10,000</div>
                 <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
                 <div className="mt-6 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Daily Interest:</span>
-                    <span className="font-medium">$1,785.71 (178.57% monthly)</span>
+                    <span>Weekly Interest:</span>
+                    <span className="font-medium">178.57% Weekly</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Cumulative ROI:</span>
-                    <span className="font-medium">400% ($25,000)</span>
+                    <span className="font-medium">108.25% Monthly</span>
                   </div>
                 </div>
                 <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
@@ -94,19 +94,19 @@ export default function InvestmentPlansPage() {
                   <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
                     <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
                   </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">2 Weeks</div>
+                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
                 </div>
                 <h3 className="text-xl font-bold">Aggressive Boost Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$10,000</div>
+                <div className="mt-2 text-3xl font-bold">$10,000 - 20,000</div>
                 <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
                 <div className="mt-6 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Daily Interest:</span>
-                    <span className="font-medium">$3,571.43 (357.14% monthly)</span>
+                    <span>Weekly Interest:</span>
+                    <span className="font-medium">25% weekly</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Cumulative ROI:</span>
-                    <span className="font-medium">300% ($40,000)</span>
+                    <span className="font-medium">108.25% Monthly</span>
                   </div>
                 </div>
                 <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
@@ -117,19 +117,19 @@ export default function InvestmentPlansPage() {
                   <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
                     <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
                   </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">2 Weeks</div>
+                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
                 </div>
                 <h3 className="text-xl font-bold">Accelerated Wealth Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$15,000</div>
+                <div className="mt-2 text-3xl font-bold">$20,000 - $50,000</div>
                 <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
                 <div className="mt-6 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Daily Interest:</span>
-                    <span className="font-medium">$5,357.14 (535.71% monthly)</span>
+                    <span>Weekly Interest:</span>
+                    <span className="font-medium">30% Weekly</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Cumulative ROI:</span>
-                    <span className="font-medium">333.33% ($65,000)</span>
+                    <span className="font-medium">129.9% Monthly</span>
                   </div>
                 </div>
                 <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
@@ -140,19 +140,19 @@ export default function InvestmentPlansPage() {
                   <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
                     <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
                   </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">2 Weeks</div>
+                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
                 </div>
                 <h3 className="text-xl font-bold">Ultimate Prosperity Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$20,000</div>
+                <div className="mt-2 text-3xl font-bold">$50,000 - $100,000</div>
                 <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
                 <div className="mt-6 space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Daily Interest:</span>
-                    <span className="font-medium">$7,142.86 (714.29% monthly)</span>
+                    <span>Weekly Interest:</span>
+                    <span className="font-medium">30% Weekly</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Cumulative ROI:</span>
-                    <span className="font-medium">300% ($80,000)</span>
+                    <span className="font-medium">129.9% Monthly</span>
                   </div>
                 </div>
                 <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
