@@ -8,10 +8,10 @@ export default function InvestmentPlans() {
     {
       id: "quick-gain",
       name: "Quick Gain Plan",
-      minimum: 1000,
-      dailyInterest: 357.14,
+      minimum: "100 - 1,000",
+      dailyInterest: 200,
       dailyInterestPercentage: 20,
-      cumulativeROI: 400,
+      cumulativeROI: 86.6,
       cumulativeAmount: 5000,
       duration: 2,
       finalAmount: 5000,
@@ -19,7 +19,7 @@ export default function InvestmentPlans() {
     {
       id: "rapid-growth",
       name: "Rapid Growth Plan",
-      minimum: 5000,
+      minimum: "1000 - 10,000",
       dailyInterest: 1785.71,
       dailyInterestPercentage: 25,
       cumulativeROI: 400,
@@ -30,7 +30,7 @@ export default function InvestmentPlans() {
     {
       id: "aggressive-boost",
       name: "Aggressive Boost Plan",
-      minimum: 10000,
+      minimum: "10,000 - 20,000",
       dailyInterest: 3571.43,
       dailyInterestPercentage: 25,
       cumulativeROI: 300,
@@ -41,7 +41,7 @@ export default function InvestmentPlans() {
     {
       id: "accelerated-wealth",
       name: "Accelerated Wealth Plan",
-      minimum: 15000,
+      minimum: "20,000 - 50,000",
       dailyInterest: 5357.14,
       dailyInterestPercentage: 30,
       cumulativeROI: 333.33,
@@ -52,7 +52,7 @@ export default function InvestmentPlans() {
     {
       id: "ultimate-prosperity",
       name: "Ultimate Prosperity Plan",
-      minimum: 20000,
+      minimum: "50,000 - 100,000",
       dailyInterest: 7142.86,
       dailyInterestPercentage: 30,
       cumulativeROI: 300,

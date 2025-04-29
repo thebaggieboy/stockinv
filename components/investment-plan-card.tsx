@@ -36,15 +36,15 @@ export default function InvestmentPlanCard({ plan }: InvestmentPlanCardProps) {
 
         <div className="grid grid-cols-2 gap-2 mb-4">
           <div>
-            <div className="text-xs text-gray-400">Daily Interest:</div>
+            <div className="text-xs text-gray-400">Weekly Interest:</div>
             <div className="text-sm">
-              ${plan.dailyInterest.toFixed(2)} ({plan.dailyInterestPercentage}% monthly)
+              {plan.dailyInterestPercentage}% monthly
             </div>
           </div>
           <div>
             <div className="text-xs text-gray-400">Cumulative ROI:</div>
             <div className="text-sm">
-              {plan.cumulativeROI}% (${plan.cumulativeAmount.toLocaleString()})
+              {plan.cumulativeROI}% 
             </div>
           </div>
         </div>
