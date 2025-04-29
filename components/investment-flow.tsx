@@ -17,7 +17,7 @@ interface InvestmentFlowProps {
 
 export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
   const [step, setStep] = useState(1)
-  const [amount, setAmount] = useState(plan.minimum)
+  const [amount, setAmount] = useState(0)
   const [paymentMethod, setPaymentMethod] = useState("crypto")
   const [isProcessing, setIsProcessing] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
@@ -92,9 +92,10 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
                 <input
                   type="number"
                   value={amount}
-                  onChange={(e) => setAmount(Math.max(plan.minimum, Number(e.target.value)))}
-                  className="w-full bg-[#0f172a] border border-gray-700 rounded-md py-2 pl-8 pr-3 text-white"
                   min={plan.minimum}
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="w-full bg-[#0f172a] border border-gray-700 rounded-md py-2 pl-8 pr-3 text-white"
+                 
                 />
               </div>
 

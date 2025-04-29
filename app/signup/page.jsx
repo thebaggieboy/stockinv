@@ -164,8 +164,8 @@ export default function SignupPage() {
               onChange={inputChangeHandler}
             />
           </div>
-          <Button type="submit" disabled={isLoading} className="bg-green-600 hover:bg-green-700">
-            {isLoading ? "Creating account..." : "Create account"}
+          <Button type="submit" disabled={isPending} className="bg-green-600 hover:bg-green-700">
+            {isPending ? "Creating account..." : "Create account"}
           </Button>
         </div>
       </form>

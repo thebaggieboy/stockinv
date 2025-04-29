@@ -75,10 +75,7 @@ fetchBalance()
           </div>
           <DashboardNav />
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
+           
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5" />
               <span className="sr-only">User profile</span>
