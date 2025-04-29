@@ -1,262 +1,105 @@
-'use client'
+import { Plus } from "lucide-react"
 import Link from "next/link"
-import { DollarSign, TrendingUp } from "lucide-react"
+import InvestmentPlanCard from "@/components/investment-plan-card"
+import InvestmentPlanComparison from "@/components/investment-plan-comparison"
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { DashboardNav } from "@/components/dashboard-nav"
-import { useRouter } from "next/navigation"
+export default function InvestmentPlans() {
+  const plans = [
+    {
+      id: "quick-gain",
+      name: "Quick Gain Plan",
+      minimum: 1000,
+      dailyInterest: 357.14,
+      dailyInterestPercentage: 20,
+      cumulativeROI: 400,
+      cumulativeAmount: 5000,
+      duration: 2,
+      finalAmount: 5000,
+    },
+    {
+      id: "rapid-growth",
+      name: "Rapid Growth Plan",
+      minimum: 5000,
+      dailyInterest: 1785.71,
+      dailyInterestPercentage: 25,
+      cumulativeROI: 400,
+      cumulativeAmount: 25000,
+      duration: 2,
+      finalAmount: 25000,
+    },
+    {
+      id: "aggressive-boost",
+      name: "Aggressive Boost Plan",
+      minimum: 10000,
+      dailyInterest: 3571.43,
+      dailyInterestPercentage: 25,
+      cumulativeROI: 300,
+      cumulativeAmount: 40000,
+      duration: 2,
+      finalAmount: 40000,
+    },
+    {
+      id: "accelerated-wealth",
+      name: "Accelerated Wealth Plan",
+      minimum: 15000,
+      dailyInterest: 5357.14,
+      dailyInterestPercentage: 30,
+      cumulativeROI: 333.33,
+      cumulativeAmount: 65000,
+      duration: 2,
+      finalAmount: 65000,
+    },
+    {
+      id: "ultimate-prosperity",
+      name: "Ultimate Prosperity Plan",
+      minimum: 20000,
+      dailyInterest: 7142.86,
+      dailyInterestPercentage: 30,
+      cumulativeROI: 300,
+      cumulativeAmount: 80000,
+      duration: 2,
+      finalAmount: 80000,
+    },
+  ]
 
-export default function InvestmentPlansPage() {
-  const router = useRouter()
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-6 w-6 pl-2 text-[hsl(var(--primary))]" />
-            <span className="text-xl font-bold">Bluevest</span>
-          </div>
-          <DashboardNav />
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon">
-              <DollarSign className="h-5 w-5" />
-              <span className="sr-only">Wallet</span>
-            </Button>
-          </div>
+    <div className="min-h-screen bg-[#020617] text-white">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-2xl font-bold mb-1">Investment Plans</h1>
+        <p className="text-sm text-gray-400 mb-8">
+          Choose from our high-yield investment plans to maximize your returns.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          {plans.slice(0, 3).map((plan) => (
+            <InvestmentPlanCard key={plan.id} plan={plan} />
+          ))}
         </div>
-      </header>
-      <main className="flex-1 bg-background p-2">
-        <div className="dashboard-container">
-          <div className="dashboard-grid">
-            <div className="dashboard-header">
-              <div className="p-2">
-                <h1 className="dashboard-title font-bold text-2xl">Investment Plans</h1>
-                <p className="dashboard-subtitle">
-                  Choose from our high-yield investment plans to maximize your returns.
-                </p>
-              </div> <br/>
-              
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          {plans.slice(3, 5).map((plan) => (
+            <InvestmentPlanCard key={plan.id} plan={plan} />
+          ))}
+
+          <div className="bg-[#0a1022] rounded-lg p-6 flex flex-col items-center justify-center text-center border border-gray-800">
+            <div className="bg-gray-700 rounded-full p-2 mb-4">
+              <Plus className="h-6 w-6 text-white" />
             </div>
-    <br/>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <div className="flex flex-col rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
-                <div className="mb-4 flex items-center justify-between">
-                  <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                    <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
-                  </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
-                </div>
-                <h3 className="text-xl font-bold">Quick Gain Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$100 - $1000</div>
-                <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
-                <div className="mt-6 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Weekly Interest:</span>
-                    <span className="font-medium">20% Weekly</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Cumulative ROI:</span>
-                    <span className="font-medium">86.6% monthly </span>
-                  </div>
-                </div>
-                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
-              </div>
-
-              <div className="flex flex-col rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
-                <div className="mb-4 flex items-center justify-between">
-                  <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                    <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
-                  </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
-                </div>
-                <h3 className="text-xl font-bold">Rapid Growth Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$1000 - 10,000</div>
-                <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
-                <div className="mt-6 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Weekly Interest:</span>
-                    <span className="font-medium">178.57% Weekly</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Cumulative ROI:</span>
-                    <span className="font-medium">108.25% Monthly</span>
-                  </div>
-                </div>
-                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
-              </div>
-
-              <div className="flex flex-col rounded-lg border bg-[hsl(var(--primary)_/_0.1)] p-6 shadow-md transition-all hover:shadow-lg relative">
-                <div className="absolute -right-2 -top-2 rounded-full bg-[hsl(var(--primary))] px-3 py-1 text-xs font-medium text-white">
-                  Popular
-                </div>
-                <div className="mb-4 flex items-center justify-between">
-                  <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                    <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
-                  </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
-                </div>
-                <h3 className="text-xl font-bold">Aggressive Boost Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$10,000 - 20,000</div>
-                <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
-                <div className="mt-6 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Weekly Interest:</span>
-                    <span className="font-medium">25% weekly</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Cumulative ROI:</span>
-                    <span className="font-medium">108.25% Monthly</span>
-                  </div>
-                </div>
-                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
-              </div>
-
-              <div className="flex flex-col rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
-                <div className="mb-4 flex items-center justify-between">
-                  <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                    <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
-                  </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
-                </div>
-                <h3 className="text-xl font-bold">Accelerated Wealth Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$20,000 - $50,000</div>
-                <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
-                <div className="mt-6 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Weekly Interest:</span>
-                    <span className="font-medium">30% Weekly</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Cumulative ROI:</span>
-                    <span className="font-medium">129.9% Monthly</span>
-                  </div>
-                </div>
-                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
-              </div>
-
-              <div className="flex flex-col rounded-lg border bg-card p-6 shadow-sm transition-all hover:shadow-md">
-                <div className="mb-4 flex items-center justify-between">
-                  <div className="rounded-full bg-[hsl(var(--primary)_/_0.2)] p-2">
-                    <TrendingUp className="h-5 w-5 text-[hsl(var(--primary))]" />
-                  </div>
-                  <div className="text-sm font-medium text-[hsl(var(--primary))]">1 Week</div>
-                </div>
-                <h3 className="text-xl font-bold">Ultimate Prosperity Plan</h3>
-                <div className="mt-2 text-3xl font-bold">$50,000 - $100,000</div>
-                <p className="mt-1 text-sm text-muted-foreground">Minimum investment</p>
-                <div className="mt-6 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Weekly Interest:</span>
-                    <span className="font-medium">30% Weekly</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Cumulative ROI:</span>
-                    <span className="font-medium">129.9% Monthly</span>
-                  </div>
-                </div>
-                <Button onClick={() => router.push("/dashboard/signals")} className="mt-6">Invest Now</Button>
-              </div>
-
-              <div className="flex flex-col items-center justify-center rounded-lg border border-dashed bg-secondary/30 p-6">
-                <div className="rounded-full bg-secondary p-2">
-                  <DollarSign className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <h3 className="mt-4 text-xl font-medium">Custom Plan</h3>
-                <p className="mt-2 text-center text-sm text-muted-foreground">
-                  Need a tailored investment strategy? Contact our team for a custom plan.
-                </p>
-                <Button variant="outline" className="mt-6">
-                  Contact Us
-                </Button>
-              </div>
-            </div>
-
-            <Card className="dashboard-card mt-8">
-              <CardHeader>
-                <CardTitle>Investment Plan Comparison</CardTitle>
-                <CardDescription>
-                  Compare our investment plans to find the best option for your financial goals
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="dashboard-table">
-                    <thead>
-                      <tr className="border-b border-border">
-                        <th>Plan</th>
-                        <th>Minimum</th>
-                        <th>Duration</th>
-                        <th>Weekly Interest</th>
-                        <th>Total ROI(Monthly)</th>
-                        <th>Final Amount(Monthly)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="font-medium">Quick Gain</td>
-                        <td>$100</td>
-                        <td>1 Week</td>
-                        <td>$20</td>
-                        <td>86.6%</td>
-                        <td>$86</td>
-                      </tr>
-                      <tr>
-                        <td className="font-medium">Rapid Growth</td>
-                        <td>$1,000</td>
-                        <td>1 Week</td>
-                        <td>$250</td>
-                        <td>108.25%</td>
-                        <td>$1441.41</td>
-                      </tr>
-                      <tr className="dashboard-table-row-highlight">
-                        <td className="font-medium">Aggressive Boost</td>
-                        <td>$10,000</td>
-                        <td>1 Week</td>
-                        <td>$2500</td>
-                        <td>108.25%</td>
-                        <td>$14,414</td>
-                      </tr>
-                      <tr>
-                        <td className="font-medium">Accelerated Wealth</td>
-                        <td>$20,000</td>
-                        <td>1 Week</td>
-                        <td>$6000</td>
-                        <td>129.9%</td>
-                        <td>$37,122</td>
-                      </tr>
-                      <tr>
-                        <td className="font-medium">Ultimate Prosperity</td>
-                        <td>$50,000</td>
-                        <td>1 Week</td>
-                        <td>$15,000</td>
-                        <td>129.29%</td>
-                        <td>$92,805</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </main>
-      <footer className="border-t border-border py-6">
-        <div className="container flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">© 2025 Bluevest. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href="#" className="text-sm text-muted-foreground hover:text-[hsl(var(--primary))]">
-              Terms
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-[hsl(var(--primary))]">
-              Privacy
-            </Link>
-            <Link href="#" className="text-sm text-muted-foreground hover:text-[hsl(var(--primary))]">
-              Help
+            <h3 className="text-lg font-semibold mb-2">Custom Plan</h3>
+            <p className="text-sm text-gray-400 mb-4">
+              Need a tailored investment strategy? Contact our team for a custom plan.
+            </p>
+            <Link
+              href="/contact"
+              className="bg-transparent border border-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-800 transition-colors"
+            >
+              Contact Us
             </Link>
           </div>
         </div>
-      </footer>
+
+        <InvestmentPlanComparison plans={plans} />
+      </div>
     </div>
   )
 }

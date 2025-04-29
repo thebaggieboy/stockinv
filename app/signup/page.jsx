@@ -16,16 +16,15 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 export default function SignupPage() {
-  const user = useSelector(selectUser);
-  const router = useRouter(); 
-  const [spinner, setSpinner] = useState(false);
-   const [isLoading, setIsLoading] = useState(false)
- 
-  const dispatch = useDispatch();
+    const user = useSelector(selectUser);
+    const router = useRouter(); 
+    const [spinner, setSpinner] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
+    const emailErr = formErr?.email || null;
+    const passwordErr = formErr?.password || formErr?.password2 || null
+    const dispatch = useDispatch();
 
     const { isIdle, isPending, error, mutateAsync: signUpFn } = useSignUp("https://avantrades-api.onrender.com/auth/users/", signUpSuccess, USER_TYPES.user)
-    //const { isIdle, isPending, error, mutateAsync: signUpFn } = useDjoserSignup("https://altclan-brands-api-1-1.onrender.com/auth/jwt/create", signUpSuccess, USER_TYPES.user)
-  
     
     const [formErr, setFormErr] = useState(error)
     const [formData, setFormData] = useState({
@@ -36,8 +35,6 @@ export default function SignupPage() {
   
     const { email, password1, password2 } = formData
   
-    const emailErr = formErr?.email || null;
-    const passwordErr = formErr?.password || formErr?.password2 || null
   
     const inputChangeHandler = (e) => {
       const { name, value } = e.target
@@ -50,12 +47,11 @@ export default function SignupPage() {
   
     }
     
-   
-
     function signUpSuccess() {
       
       router.push("/dashboard")
     }
+
     const submit = async (e) => {
       
       e.preventDefault();
@@ -84,10 +80,7 @@ export default function SignupPage() {
               setSpinner(false)
               signUpSuccess()
               await signUpFn(formData)
-             
-              
-                  
-                  
+                     
               }
         
               const error = { ...data }

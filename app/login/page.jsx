@@ -15,55 +15,52 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+export function LoginError() {
+  return (
+    <div id="alert-2" class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+      <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+      </svg>
+      <span class="sr-only">Info</span>
+      <div class="ml-3 text-sm text-center font-medium">
+        Email or password is incorrect.
+      </div>
+
+    </div>
+  )
+}
+
+const signupSuccess = <div class="flex items-center text-center p-4 mb-4 text-sm text-green-800 border border-0 bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
+<svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+</svg>
+<span class="sr-only">Info</span>
+<div>
+You have created a new account, please login to complete your profile
+</div>
+</div>
+
+
 export default function LoginPage() {
-    const [accessToken, setAccessToken] = useState("")
-    const [refreshToken, setRefreshToken] = useState("")
+
     const dispatch = useDispatch();
     const router = useRouter();
     const user = useSelector(selectUser);
     const user_email = useSelector(selectUserEmail);
     const [isLoading, setIsLoading] = useState(false)
-    
     const token = useSelector(selectToken);
-    
-    
     const [formErr, setFormErr] = useState(null)
-    const [searchQuery, setSearchQuery] = useState('');
-    const [profileQuery, setProfileQuery] = useState([]);
     const searchParams = useSearchParams()
     const search = searchParams.get('user')
-    const [userResult, setUserResult] = useState([])
     const [spinner, setSpinner] = useState(false)	
-     
-  
-    const signupSuccess =    <div class="flex items-center text-center p-4 mb-4 text-sm text-green-800 border border-0 bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
-      <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-      </svg>
-      <span class="sr-only">Info</span>
-      <div>
-      You have created a new account, please login to complete your profile
-      </div>
-      </div>
-  
-    
-  
-    if (user !== null) {
-     
-      router.push("/dashboard");
-      
-    }
-    
-  
-    //const { isIdle, isPending, error, mutateAsync: loginFn } = useLogin("https://avantrades-api.onrender.com/dj-rest-auth/login/", loginSuccess, USER_TYPES.user)
+
     const { isIdle, isPending, error, mutateAsync: loginFn } = useLogin("https://avantrades-api.onrender.com/auth/jwt/create/", loginSuccess, USER_TYPES.user)
     const [formData, setFormData] = useState({
       email: "",
       password: "",
     })
-    //console.log("Query params: ", search)
-    console.log("Token State: ", token)
-    
+ 
+  
     const inputChangeHandler = (e) => {
       const { name, value } = e.target
       setFormData((prevValue) => {
@@ -74,13 +71,13 @@ export default function LoginPage() {
       })
   
     }
-  
    
     async function loginEmail(){
       dispatch(setUserEmail(formData?.email))
       console.log("User Email: ", user_email)
     
     }
+
     loginEmail()
     
     async function loginSuccess() {
@@ -90,23 +87,17 @@ export default function LoginPage() {
           const oneMonthFromToday = new Date(today.getFullYear(), today.getMonth() + 1, today.getDate());
           document.cookie = `user_type=user; expires=${oneMonthFromToday.toUTCString()} Path=/`
       
-      console.log(document.cookie)
+          console.log(document.cookie)
       }
   
   
     const submit = async (e) => {
-      e.preventDefault();
-      //
-      
+      e.preventDefault();  
       try {
         
-        await loginFn(formData)
-      
+        await loginFn(formData)    
         loginSuccess()
-  
-  
-        
-      
+
       } catch (error) {
         console.log(error)
         setSpinner(false)
@@ -114,10 +105,16 @@ export default function LoginPage() {
       }
     };
     
+    if (user !== null) {
 
+      router.push("/dashboard");
+      
+    }
+    
 
   return (
     <div className="flex min-h-screen flex-col">
+      	{search == "success" ? signupSuccess : ""}
       <div className="flex flex-col items-center justify-center px-4 py-12">
         <Link
           href="/"
@@ -169,11 +166,12 @@ export default function LoginPage() {
               onChange={inputChangeHandler}
             />
           </div>
-          <Button disabled={isLoading} className="bg-green-600 hover:bg-green-700">
-            {isLoading ? "Logging in..." : "Log in"}
+          <Button disabled={isPending} className="bg-green-600 hover:bg-green-700">
+            {isPending ? "Logging in..." : "Log in"}
           </Button>
         </div>
       </form>
+
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
