@@ -43,6 +43,9 @@ export function WalletReceive({
     bitcoin: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
     ethereum: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     usdc: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    usdt: "",
+    solana: ""
+
   }
 
   const address = initialAddress || walletAddresses[selectedCrypto as keyof typeof walletAddresses]
@@ -66,6 +69,11 @@ export function WalletReceive({
           : selectedCrypto === "usdc"
             ? "ethereum"
             : "crypto"
+           selectedCrypto === "usdt"
+        ? "usdt"  : "crypto"
+          selectedCrypto === "solana"
+        ? "solana"  : "crypto"
+            
 
     const amountParam = amount ? `?amount=${amount}` : ""
     return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${protocol}:${address}${amountParam}`
@@ -166,10 +174,12 @@ const { email, amount, type, status } = formData
               <SelectTrigger id="crypto-type">
                 <SelectValue placeholder="Select cryptocurrency" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="bitcoin">Bitcoin (BTC)</SelectItem>
+              <SelectContent onChange={inputChangeHandler}>
+                <SelectItem  value="bitcoin">Bitcoin (BTC)</SelectItem>
                 <SelectItem value="ethereum">Ethereum (ETH)</SelectItem>
                 <SelectItem value="usdc">USD Coin (USDC)</SelectItem>
+                <SelectItem value="usdt">USDT (TETHER)</SelectItem>
+                <SelectItem value="sol">SOLANA (SOL)</SelectItem>
               </SelectContent>
             </Select>
           </div>

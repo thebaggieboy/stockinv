@@ -81,6 +81,8 @@ const { email, amount, type, status } = formData
           console.log(data)
           setTransactions(data)
           setIsDepositSuccess(true)
+          router.push("/dashboard/deposit-complete")
+
                  
               }
   
@@ -92,9 +94,11 @@ const { email, amount, type, status } = formData
 
   // Wallet addresses for different cryptocurrencies
   const walletAddresses = {
-    bitcoin: "bc1qlf5nr2zem75e6ewqxewzszdvpxxezpefgwzcu6",
-    ethereum: "0x792eb5501c3af4fd8e0f1cfddf802941a07854e2",
+    bitcoin: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+    ethereum: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
     usdc: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+    usdt: "",
+    solana: ""
   }
 
   const handleDeposit = () => {
@@ -103,6 +107,7 @@ const { email, amount, type, status } = formData
     setTimeout(() => {
       setIsLoading(false)
       alert(`Successfully initiated deposit of ${amount} using ${cryptoType}`)
+       
       setAmount("")
     }, 1500)
   }
@@ -114,10 +119,10 @@ const { email, amount, type, status } = formData
   }
 
   return (
-    <Tabs defaultValue="crypto" className="w-full">
-      <TabsList className="grid w-full grid-cols-2">
+    <Tabs defaultValue="crypto" className="">
+      <TabsList className="grid w-full  grid-cols-2">
         <TabsTrigger value="crypto" className="flex items-center">
-          <Bitcoin className="mr-2 h-4 w-4" />
+          <Bitcoin className="" />
           Crypto
         </TabsTrigger>
         <TabsTrigger value="card" className="flex items-center">
@@ -182,6 +187,18 @@ const { email, amount, type, status } = formData
               <RadioGroupItem value="usdc" id="usdc" />
               <Label htmlFor="usdc" className="flex-1 cursor-pointer">
                 USD Coin (USDC)
+              </Label>
+            </div>
+            <div className="flex items-center space-x-2 rounded-md border p-3">
+              <RadioGroupItem value="usdt" id="usdt" />
+              <Label htmlFor="usdt" className="flex-1 cursor-pointer">
+                USDT(TETHER)
+              </Label>
+            </div>
+            <div className="flex items-center space-x-2 rounded-md border p-3">
+              <RadioGroupItem value="sol" id="sol" />
+              <Label htmlFor="sol" className="flex-1 cursor-pointer">
+                Solana  (SOL)
               </Label>
             </div>
           </RadioGroup>

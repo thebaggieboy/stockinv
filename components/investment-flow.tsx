@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Check, ChevronRight, CreditCard, DollarSign, X } from "lucide-react"
-
+import {useRouter} from "next/navigation"
 interface InvestmentFlowProps {
   plan: {
     id: string
@@ -14,14 +14,14 @@ interface InvestmentFlowProps {
   }
   onClose: () => void
 }
-
+import { WalletReceive } from "./wallet-receive"
 export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
   const [step, setStep] = useState(1)
   const [amount, setAmount] = useState(0)
   const [paymentMethod, setPaymentMethod] = useState("crypto")
   const [isProcessing, setIsProcessing] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
-
+  const router = useRouter()
   const handleNext = () => {
     if (step < 4) {
       setStep(step + 1)
@@ -31,9 +31,14 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
       setIsProcessing(true)
       setTimeout(() => {
         setIsProcessing(false)
-        setIsComplete(true)
+        handleNext()
+
       }, 2000)
     }
+  }
+
+  const completeInvestment = () =>{
+    router.push("/dashboard/active-investments")  
   }
 
   const handleBack = () => {
@@ -130,7 +135,7 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
                   </div>
                   <div>
                     <div className="font-medium">Cryptocurrency</div>
-                    <div className="text-xs text-gray-400">Pay with Bitcoin, Ethereum, or USDT</div>
+                    <div className ="text-xs text-gray-400">Pay with Bitcoin, Ethereum, or USDT</div>
                   </div>
                 </div>
 
@@ -155,32 +160,9 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
           {/* Step 3: Review */}
           {step === 3 && (
             <div className="space-y-4">
-              <h4 className="font-medium">Review Investment</h4>
-              <p className="text-sm text-gray-400">Please review your investment details before confirming.</p>
-
-              <div className="bg-[#172136] p-4 rounded-md space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Plan:</span>
-                  <span>{plan.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Investment Amount:</span>
-                  <span>${amount.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Expected Return:</span>
-                  <span>${calculateReturn().toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Duration:</span>
-                  <span>{plan.duration} weeks</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-400">Payment Method:</span>
-                  <span>{paymentMethod === "crypto" ? "Cryptocurrency" : "Credit/Debit Card"}</span>
-                </div>
-              </div>
-
+              <h4 className="font-medium"></h4>
+            
+              <WalletReceive/>
               <div className="text-xs text-gray-400">
                 By clicking Confirm, you agree to our Terms of Service and Privacy Policy.
               </div>
@@ -236,7 +218,7 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
 
           {step < 4 ? (
             <button
-              onClick={handleNext}
+              onClick={completeInvestment}
               className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm flex items-center hover:bg-blue-600"
             >
               {step === 3 ? "Confirm Investment" : "Continue"}

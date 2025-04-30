@@ -27,6 +27,12 @@ export function DashboardNav() {
       icon: BarChart3,
     },
     {
+      name: "AI Strategies",
+      href: "/dashboard/strategies",
+      icon: Wallet,
+    },
+
+    {
       name: "Wallet",
       href: "/dashboard/wallet",
       icon: Wallet,

@@ -11,6 +11,9 @@ import {
   Shield,
   TrendingUp,
   Wallet,
+  LineChart, 
+  Brain,
+  Zap
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -335,6 +338,7 @@ export default function LandingPage() {
                   Easily fund your investment account using various cryptocurrencies with low transaction fees.
                 </p>
               </div>
+
               <div className="flex flex-col items-center space-y-4 rounded-lg border border-zinc-800 bg-zinc-950 p-6 shadow-sm">
                 <div className="rounded-full bg-[hsl(var(--primary)_/_0.1)] p-3">
                   <Lock className="h-6 w-6 text-[hsl(var(--primary))]" />
@@ -344,10 +348,98 @@ export default function LandingPage() {
                   Your investments are protected with enterprise-grade security and encryption protocols.
                 </p>
               </div>
+
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                  <Brain className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold">AI-Generated Strategies</h3>
+                <p className="text-muted-foreground text-center">
+                  Multi-asset allocation, market condition adaptation, and strategy combination for optimal returns.
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                  <LineChart className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold">Portfolio Optimization</h3>
+                <p className="text-muted-foreground text-center">
+                  Continuous learning through reinforcement learning to optimize for risk-adjusted returns.
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                  <Zap className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold">Adaptive Trading</h3>
+                <p className="text-muted-foreground text-center">
+                  Dynamic rebalancing, volatility-based position sizing, and momentum-following strategies.
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6 md:col-span-2 lg:col-span-1">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-8 w-8 text-primary"
+                  >
+                    <path d="M12 2v20" />
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold">Yield Optimization</h3>
+                <p className="text-muted-foreground text-center">
+                  Automated yield farming rotation, impermanent loss mitigation, and compounding automation.
+                </p>
+              </div>
+              <div className="flex flex-col items-center space-y-4 rounded-lg border p-6">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+                  <Shield className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold">Security Measures</h3>
+                <p className="text-muted-foreground text-center">
+                  Smart contract audits, insurance coverage, and fail-safe mechanisms to protect your assets.
+                </p>
+              </div>
+
+
             </div>
           </div>
         </section>
-
+ <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+              <div className="flex flex-col justify-center space-y-4">
+                <div className="space-y-2">
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                    AI-Powered Asset Management on the blockchain
+                  </h1>
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                    Bluevest democratizes sophisticated trading strategies typically reserved for institutional investors.
+                    Our platform uses AI to continuously learn and adapt trading strategies, automatically rebalancing
+                    portfolios based on market conditions and risk parameters.
+                  </p>
+                </div>
+               
+              </div>
+              <div className="flex items-center justify-center">
+                <div className="relative h-[350px] w-full overflow-hidden rounded-xl bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 p-6 flex items-center justify-center">
+                  <LineChart className="h-32 w-32 text-primary animate-pulse" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+                    <div className="h-40 w-40 rounded-full bg-primary/10 animate-ping" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <section id="dashboard-preview" className="py-12 md:py-24 lg:py-32 border-b border-zinc-800">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">

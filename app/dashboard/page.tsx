@@ -76,10 +76,10 @@ fetchBalance()
           <DashboardNav />
           <div className="flex items-center gap-4">
            
-            <Button variant="ghost" size="icon">
+            <Link href={'/dashboard/profile'} variant="ghost" size="icon">
               <User className="h-5 w-5" />
               <span className="sr-only">User profile</span>
-            </Button>
+            </Link>
             <Button variant="ghost" size="icon">
               <Settings className="h-5 w-5" />
               <span className="sr-only">Settings</span>
