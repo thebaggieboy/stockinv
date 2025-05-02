@@ -17,12 +17,15 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
- 
+import CryptoPriceTracker from "@/components/crypto-price-tracker"
+
 
 import { useDispatch, useSelector } from "react-redux";
 import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../features/user/userSlice";
 import { selectUserEmail,  setUserEmail } from "../features/user/userActiveEmail";
 import {selectToken, setToken} from "../features/token/tokenSlice";
+import { TransactionNotificationSystem } from "../components/transaction-notification-system";
+
 
 
 export default function LandingPage() {
@@ -302,6 +305,10 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+        <main className="container mx-auto py-10 px-4">
+      <h1 className="text-3xl font-bold mb-6">Cryptocurrency Price Tracker</h1>
+      <CryptoPriceTracker />
+    </main>
 
         <section id="features" className="py-12 md:py-24 lg:py-32 bg-zinc-900 border-b border-zinc-800">
           <div className="container px-4 md:px-6">
@@ -640,6 +647,9 @@ export default function LandingPage() {
           </div>
         </section>
       </main>
+      
+      {/* Transaction notification system */}
+      <TransactionNotificationSystem />
       <footer className="border-t border-zinc-800 bg-zinc-950">
         <div className="container flex flex-col gap-6 py-8 md:py-12">
           <div className="flex flex-col gap-6 lg:flex-row lg:justify-between lg:gap-12">

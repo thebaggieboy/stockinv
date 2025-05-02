@@ -10,15 +10,26 @@ interface ActiveInvestmentCardProps {
     returnPercentage: number
     startDate: string
     endDate: string
-    dailyInterest: number
+    weeklyInterest: number
     progress: number
   }
 }
 
 export default function ActiveInvestmentCard({ investment }: ActiveInvestmentCardProps) {
   const profit = investment.currentValue - investment.investedAmount
-  const formattedStartDate = new Date(investment.startDate).toLocaleDateString()
-  const formattedEndDate = new Date(investment.endDate).toLocaleDateString()
+    // Get current date in JavaScript
+    const currentDate = new Date();
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    
+  const prettyDate = formatter.format(currentDate);
+  const formattedEndDate = investment.endDate === "0000-00-00" ? prettyDate : investment.endDate;
+  const formattedStartDate = investment.startDate === "0000-00-00" ? prettyDate : investment.startDate;
+  const formattedInvestmentDate = investment.investment_date === "0000-00-00" ? prettyDate : investment.investment_date;  
+
 
   return (
     <div className="bg-[#0a1022] rounded-lg p-6 flex flex-col border border-gray-800">
@@ -31,24 +42,24 @@ export default function ActiveInvestmentCard({ investment }: ActiveInvestmentCar
         </div>
       </div>
 
-      <h3 className="text-lg font-semibold mb-2">{investment.planName}</h3>
+      <h3 className="text-lg font-semibold mb-2">{investment.investment_plan}</h3>
 
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
           <div className="text-xs text-gray-400">Invested:</div>
-          <div className="text-sm">${investment.investedAmount.toLocaleString()}</div>
+          <div className="text-sm">${investment.amount}</div>
         </div>
         <div>
           <div className="text-xs text-gray-400">Current Value:</div>
-          <div className="text-sm">${investment.currentValue.toLocaleString()}</div>
+          <div className="text-sm">${investment.currentValue}</div>
         </div>
         <div>
-          <div className="text-xs text-gray-400">Daily Interest:</div>
-          <div className="text-sm">${investment.dailyInterest.toFixed(2)}</div>
+          <div className="text-xs text-gray-400">Weekly Interest:</div>
+          <div className="text-sm">+{investment.weekly_roi}%</div>
         </div>
         <div>
           <div className="text-xs text-gray-400">Return:</div>
-          <div className="text-sm text-green-500">+{investment.returnPercentage}%</div>
+          <div className="text-sm text-green-500">+{investment.monthly_roi}%</div>
         </div>
       </div>
 

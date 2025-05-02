@@ -66,11 +66,11 @@ export default function StrategiesPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col p-5">
+    <div className="flex min-h-screen flex-col">
     
       <div className="flex flex-1">
        
-        <main className="flex-1 overflow-auto p-5">
+        <main className="flex-1 overflow-auto p-3">
           <div className="container py-6">
             <div className="mb-6 flex flex-col gap-2">
               <h1 className="text-3xl font-bold">Strategy Marketplace</h1>

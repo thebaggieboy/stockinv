@@ -1,13 +1,22 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Check, ChevronRight, CreditCard, DollarSign, X } from "lucide-react"
 import {useRouter} from "next/navigation"
+import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../features/user/userSlice";
+import { selectUserEmail,  setUserEmail } from "../features/user/userActiveEmail";
+import {selectToken, setToken} from "../features/token/tokenSlice";
+import { useSelector } from "react-redux"
+import { WalletDeposit } from "@/components/wallet-deposit"
+import { WalletWithdraw } from "@/components/wallet-withdraw"
+import { WalletSend } from "@/components/wallet-send"
 interface InvestmentFlowProps {
   plan: {
     id: string
     name: string
     minimum: number
+    weeklyInterest: number
+    weeklyInterestPercentage: number
     cumulativeROI: number
     cumulativeAmount: number
     duration: number
@@ -16,28 +25,219 @@ interface InvestmentFlowProps {
 }
 import { WalletReceive } from "./wallet-receive"
 export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
+  const user = useSelector(selectUser)
+  const userEmail = useSelector(selectUserEmail)
+  const [wallets, setWallets] = useState([])
+  const [btcBalance, setBtcBalance] = useState([])
+  const [usdAmount, setUsdAmount] = useState(0)
   const [step, setStep] = useState(1)
-  const [amount, setAmount] = useState(0)
+  const [amounts, setAmounts] = useState(0)
   const [paymentMethod, setPaymentMethod] = useState("crypto")
   const [isProcessing, setIsProcessing] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [isDeposit, setIsDeposit] = useState(false)
+  const [isWithdraw, setIsWithdraw] = useState(false)
+  const [isTransaction, setIsTransaction] = useState(false)
+  const [isDepositSuccess, setIsDepositSuccess] = useState(false)
+  const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false)
+  const [totalReturn, setTotalReturn] = useState(0)
+   const [transactions, setTransactions] = useState([])
   const router = useRouter()
-  const handleNext = () => {
-    if (step < 4) {
-      setStep(step + 1)
-    }
 
-    if (step === 3) {
-      setIsProcessing(true)
+  // Get current date in JavaScript
+  const currentDate = new Date();
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  const prettyDate = formatter.format(currentDate);
+  
+  const calculateFutureDates = () => {
+    // Get current date
+    const currentDate = new Date();
+    
+    // Calculate date two weeks from now
+    const twoWeeksFromNow = new Date(currentDate);
+    twoWeeksFromNow.setDate(currentDate.getDate() + 14);
+    
+    // Calculate date one month from now
+    const oneMonthFromNow = new Date(currentDate);
+    oneMonthFromNow.setMonth(currentDate.getMonth() + 1);
+    
+    // Store both dates in variables
+    const futureDates = {
+      twoWeeks: twoWeeksFromNow,
+      oneMonth: oneMonthFromNow
+    };
+    
+    return futureDates;
+  };
+  
+  // Example usage
+  const { twoWeeks, oneMonth } = calculateFutureDates();
+  console.log('Two weeks from now:', twoWeeks.toDateString());
+  console.log('One month from now:', oneMonth.toDateString());
+
+      const [formData, setFormData] = useState({
+            email: user[0]?.email,  
+            amount: amounts,
+            type: "investments",
+            status: "Pending",	
+            investment_plan:plan.id,
+            investment_duration:plan.duration,
+            investment_date:currentDate,
+            weekly_roi:plan.weeklyInterestPercentage,
+            monthly_roi:plan.cumulativeROI,
+            weekly_roi_date:twoWeeks,
+            monthly_roi_date:oneMonth,
+          })
+          // Handle form submission
+    const { email, amount, type, status, investment_plan, investment_date,  investment_duration, weekly_roi, monthly_roi, weekly_roi_date, monthly_roi_date } = formData
+    
+  
+    const inputChangeHandler = (e) => {
+      const { name, value } = e.target
+     
+      setFormData((prevValue) => {
+        setAmounts(e.target.value)
+        return {
+          ...prevValue,
+          [name]: value
+        }
+        
+      })
+  
+    } 
+
+   const createNewTransaction = async() => { 
+    try {
+      const res = await fetch("https://avantrades-api.onrender.com/api/transactions/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, amount, type, status}),
+        credentials: "include"
+      })
+      
+      const data = await res.json()
+      console.log("Response data:", data) 
+      
+      if (res.status >= 200 && res.status <= 209) {
+        console.log("Investment plan added to transactions.")
+    
+        setTransactions(data)       
+    
+                      
+      } 
+      else {
+        const error = { ...data }
+        throw error
+      }
+    } catch (error) {
+      console.error("Transaction failed:", error)
+      // Handle error state here
+    }
+   }
+
+    const createNewInvestment = async() => {
       setTimeout(() => {
-        setIsProcessing(false)
-        handleNext()
+        console.log("Creating a new transaction...")
+        createNewTransaction()
 
       }, 2000)
+    
+   
+      try {
+        const res = await fetch("https://avantrades-api.onrender.com/api/investment-plans/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, amount, type, status, investment_plan, investment_duration,  investment_date, weekly_roi, monthly_roi, weekly_roi_date, monthly_roi_date }),
+          credentials: "include"
+        })
+        
+        const data = await res.json()
+        console.log("Response data:", data) 
+        
+        if (res.status >= 200 && res.status <= 209) {
+          console.log("New Investment Plan Registered.")
+        
+          setStep(step + 1)
+          setIsProcessing(false)
+          setIsComplete(true)
+                        
+        } 
+        else {
+          const error = { ...data }
+          throw error
+        }
+      } catch (error) {
+        console.error("Investment failed:", error)
+        // Handle error state here
+      }
     }
-  }
-
-  const completeInvestment = () =>{
+    const handleNext = async() => {
+  
+      if (step < 4) {
+        setStep(step + 1)
+      }
+  
+      if (step === 3) {
+        setIsProcessing(true)
+          setTimeout(() => {
+          setIsProcessing(false)
+          
+          console.log("Form submitted:", formData)
+          
+          createNewInvestment()
+      
+          //completeInvestment()
+  
+        }, 2000)
+      }
+    }
+              
+   
+  
+    useEffect(() => {
+     // Call the function
+      
+       async function fetchTransaction(){
+         const res =  await fetch(`https://avantrades-api.onrender.com/api/transactions/`, {
+           method: "GET",
+           headers: {
+           
+               "Content-Type": "application/json"
+           },
+       })
+       
+       const data = await res.json()
+       if (res.status >= 200 & res.status <= 209) {
+         
+         console.log("Transactions [STATE]: ", data);
+       }
+       
+       }
+       fetchTransaction()
+      
+     }, [])
+     // console.log("Wallets [STATE]: ", wallets);
+     // Function to get all transactions for the current user
+    const getCurrentUserTransactions = () => {
+     if (!transactions || !transactions.length) return [];
+     
+     return transactions.filter(transaction => 
+       transaction.email === user[0]?.email
+     );
+    };
+    
+    
+    
+  const completeInvestment = async() =>{
     router.push("/dashboard/active-investments")  
   }
 
@@ -48,8 +248,20 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
   }
 
   const calculateReturn = () => {
-    return amount * (plan.cumulativeROI / 100)
+    const expected_return = amount * (plan.cumulativeROI / 100)
+   
+   
+    return expected_return
   }
+  
+  const calculateTotalReturn = () => {
+    const expected_return = Number(amount) * (Number(plan.cumulativeROI) / 100)
+    const total_return = Number(amount) + expected_return
+    
+    return total_return
+  }
+
+  console.log("Form Data: ", formData)
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
@@ -96,9 +308,11 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
                 <input
                   type="number"
+                  id="amount"
+                  name="amount"
                   value={amount}
                   min={plan.minimum}
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={inputChangeHandler}
                   className="w-full bg-[#0f172a] border border-gray-700 rounded-md py-2 pl-8 pr-3 text-white"
                  
                 />
@@ -106,8 +320,12 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
 
               <div className="bg-[#172136] p-3 rounded-md">
                 <div className="flex justify-between text-sm mb-2">
-                  <span>Expected return:</span>
+                  <span>Profit:</span>
                   <span>${calculateReturn().toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-sm mb-2">
+                  <span>Expected Return:</span>
+                  <span>${calculateTotalReturn()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Duration:</span>
@@ -218,7 +436,7 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
 
           {step < 4 ? (
             <button
-              onClick={completeInvestment}
+              onClick={handleNext}
               className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm flex items-center hover:bg-blue-600"
             >
               {step === 3 ? "Confirm Investment" : "Continue"}

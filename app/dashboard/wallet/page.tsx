@@ -416,18 +416,21 @@ const getCurrentUserTransactions = () => {
                     <TabsTrigger value="all">All</TabsTrigger>
                     <TabsTrigger value="deposits">Deposits</TabsTrigger>
                     <TabsTrigger value="withdrawals">Withdrawals</TabsTrigger>
-                    {/* {<TabsTrigger value="investments">Investments</TabsTrigger>} */}
+             {<TabsTrigger value="investments">Investments</TabsTrigger>}
                   </TabsList>
 
 
                   <TabsContent value="all">
     <div className="space-y-4">
-      {getCurrentUserTransactions().length > 0 ? (
+      {getCurrentUserTransactions("all").length > 0 ? (
         // Sort by date (newest first) before mapping
-        getCurrentUserTransactions()
+        getCurrentUserTransactions("all")
           .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
           .map((transaction, index) => {
             const isDeposit = transaction.type === "deposit";
+            const isWithdraw = transaction.type === "withdraw";
+            const isInvestment = transaction.type === "investments";
+
             
             return (
               <div key={index} className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0">
@@ -539,23 +542,38 @@ const getCurrentUserTransactions = () => {
     </div>
   </TabsContent>
                   <TabsContent value="investments">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                          <div className="rounded-full bg-[hsl(var(--chart-blue)_/_0.2)] p-2">
-                            <Wallet className="h-4 w-4 text-[hsl(var(--chart-blue))]" />
-                          </div>
-                          <div>
-                            <p className="font-medium">Investment (Aggressive Boost Plan)</p>
-                            <p className="text-sm text-muted-foreground">Apr 14, 2025</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-medium">-$10,000.00</p>
-                          <p className="text-sm profit-text">Completed</p>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="space-y-4">
+      {getUserTransactionsByType("investments").length > 0 ? (
+        getUserTransactionsByType("investments").map((transaction, index) => (
+          <div key={index} className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0">
+            <div className="flex items-center gap-4">
+              <div className="rounded-full bg-red-100 p-2">
+                <ArrowUp className="h-4 w-4 text-red-500" />
+              </div>
+              <div>
+                <p className="font-medium">Investments ({transaction.cryptoType || "Bitcoin"})</p>
+                <p className="text-sm text-muted-foreground">
+                  {formatDate(transaction.createdAt) || "Recent"}
+                </p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="font-medium">-${Number(transaction.amount).toFixed(2)}</p>
+              <p className={`text-sm ${
+                transaction.status === "completed" ? "text-green-500" : 
+                transaction.status === "rejected" ? "text-red-500" : "text-yellow-500"
+              }`}>
+                {transaction.status.charAt(0).toUpperCase() + transaction.status.slice(1)}
+              </p>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="text-center py-8 text-muted-foreground">
+          No withdrawal transactions found
+        </div>
+      )}
+    </div>
                   </TabsContent> 
 
 

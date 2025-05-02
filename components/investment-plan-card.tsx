@@ -17,6 +17,7 @@ interface InvestmentPlanCardProps {
   }
 }
 
+
 export default function InvestmentPlanCard({ plan }: InvestmentPlanCardProps) {
   const [showFlow, setShowFlow] = useState(false)
 

@@ -12,7 +12,7 @@ import { useSelector } from "react-redux"
 import { WalletDeposit } from "@/components/wallet-deposit"
 import { WalletReceive } from "@/components/wallet-receive"
 import { WalletSend } from "@/components/wallet-send"
-
+import { DashboardNav } from "@/components/dashboard-nav"
 export default function InvestmentPlans() {
   const plans = [
     {
@@ -72,7 +72,7 @@ export default function InvestmentPlans() {
     },
   ]
   const router = useRouter()
-  const user = useSelector(selectUser)
+  const user_ = useSelector(selectUser)
   const [withdrawMethod, setWithdrawMethod] = useState("crypto")
   const [wallets, setWallets] = useState([]);
   const [btcBalance, setBtcBalance] = useState([]);
@@ -80,162 +80,17 @@ export default function InvestmentPlans() {
   const [open, setOpen] = useState(false)
   const [success, setSuccess] = useState(false)
   const [isDeposit, setIsDeposit] = useState(false)
-  const [isWithdraw, setIsWithdraw] = useState(false)
-  const [isTransaction, setIsTransaction] = useState(false)
-  const [isDepositSuccess, setIsDepositSuccess] = useState(false)
+ 
   const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false)
    const [transactions, setTransactions] = useState([])
    const usdAmount = wallets.balance;
      // Format date function
-const formatDate = (dateString) => {
- if (!dateString) return "N/A";
- const date = new Date(dateString);
- return date.toLocaleDateString('en-US', { 
-   month: 'short', 
-   day: 'numeric', 
-   year: 'numeric' 
- });
-};
-    const [formData, setFormData] = useState({
-          email:user[0].email,  
-          amount: "",
-          type: "investment_plan",
-          status: "pending",	
-           
-        })
-        // Handle form submission
-  const { email, amount, type, status } = formData
-  
- useEffect(() => {
-   async function fetchBalance(){
-     const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
-       method: "GET",
-       headers: {
-       
-           "Content-Type": "application/json"
-       },
-   })
-   
-   const data = await res.json()
-   if (res.status >= 200 & res.status <= 209) {
-     setWallets(data)
-     console.log("Wallets [STATE]: ", data);
-     convertUsdToBitcoin();
-   }
-   
-   }
-   
-   fetchBalance()
-   
-   async function convertUsdToBitcoin() {
-   
-     try {
-       // Try a different API
-       const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-       const data = await response.json();
-       
-       // Calculate and display conversion
-       const btcPrice = data.bitcoin.usd;
-       const btcAmount = usdAmount / btcPrice;
-       setBtcBalance(btcAmount)
-       
-       console.log(`$${usdAmount} USD = ${btcAmount.toFixed(8)} BTC`);
-       console.log(`(Based on 1 BTC = $${btcPrice.toLocaleString()} USD)`);
-       
-       return btcAmount;
-     } catch (error) {
-       console.error('Failed to convert currency:', error);
-       return null;
-     }
-   }
-   // Call the function
-  
-   async function fetchTransaction(){
-     const res =  await fetch(`https://avantrades-api.onrender.com/api/transactions/`, {
-       method: "GET",
-       headers: {
-       
-           "Content-Type": "application/json"
-       },
-   })
-   
-   const data = await res.json()
-   if (res.status >= 200 & res.status <= 209) {
-     setTransactions(data)
-     console.log("Transactions [STATE]: ", data);
-   }
-   
-   }
-   fetchTransaction()
-
-
-
-      
-  const handleSubmit = async(e) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-    
-    try {
-      const res = await fetch("https://avantrades-api.onrender.com/api/transactions/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, amount, type, status }),
-        credentials: "include"
-      })
-      
-      const data = await res.json()
-      console.log("Response data:", data) 
-      
-      if (res.status >= 200 && res.status <= 209) {
-        console.log("New Investment Plan Registered.")
-    
-        setTransactions(data)
-        
-       
-      } else {
-        const error = { ...data }
-        throw error
-      }
-    } catch (error) {
-      console.error("Withdrawal failed:", error)
-      // Handle error state here
-    }
-  }
  
-
-  
-
-
- }, [btcBalance, user, usdAmount])
- // console.log("Wallets [STATE]: ", wallets);
- // Function to get all transactions for the current user
-const getCurrentUserTransactions = () => {
- if (!transactions || !transactions.length) return [];
- 
- return transactions.filter(transaction => 
-   transaction.email === user[0]?.email
- );
-};
-
-
- const getUserTransactionsByType = (type) => {
-   if (!transactions || !transactions.length) return [];
-   
-   return transactions.filter(transaction => 
-     transaction.email === user[0]?.email && 
-     transaction.type === type
-   );
- };
- 
- 
- const userTransactions = getUserTransactionsByType('investment_plan');
- console.log("User Investment Plan:", userTransactions);
   
   return (
-    
-    <div className="min-h-screen bg-[#020617] text-white">
+    <>
+   
+     <div className="min-h-screen bg-[#020617] text-white">
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-1">Investment Plans</h1>
         <p className="text-sm text-gray-400 mb-8">
@@ -273,5 +128,7 @@ const getCurrentUserTransactions = () => {
         <InvestmentPlanComparison plans={plans} />
       </div>
     </div>
+    </> 
+   
   )
 }

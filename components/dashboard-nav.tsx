@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BarChart3, Home, LineChart, Menu, Wallet, X } from "lucide-react"
+import { BarChart3, Home, LineChart, Menu, Wallet, X} from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function DashboardNav() {
@@ -36,6 +36,14 @@ export function DashboardNav() {
       name: "Wallet",
       href: "/dashboard/wallet",
       icon: Wallet,
+    },
+
+    
+    {
+      name: "Transactions",
+      href: "/dashboard/transactions",
+      icon: Wallet,
+      
     },
   ]
 

@@ -224,10 +224,11 @@ return date.toLocaleDateString('en-US', {
         transaction.type === type
       );
     };
+
     
     
     const userTransactions = getUserTransactionsByType('deposit');
-    console.log("User Deposits:", userTransactions);
+    console.log("User Withdrawals:", userTransactions);
      
 
   return (

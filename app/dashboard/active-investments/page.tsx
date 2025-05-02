@@ -1,11 +1,54 @@
+"use client"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import ActiveInvestmentCard from "@/components/active-investment-card"
 import InvestmentSummary from "@/components/investment-summary"
+import { WalletDeposit } from "@/components/wallet-deposit"
+import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../../../features/user/userSlice";
+import { selectUserEmail,  setUserEmail } from "../../../features/user/userActiveEmail";
+import {selectToken, setToken} from "../../../features/token/tokenSlice";
+import { useSelector, useDispatch } from "react-redux"
+import { WalletWithdraw } from "@/components/wallet-withdraw"
+import { WalletReceive } from "@/components/wallet-receive"
+import { WalletSend } from "@/components/wallet-send"
 
 export default function ActiveInvestmentsPage() {
-  // Sample active investments data
-  const activeInvestments = [
+  const router = useRouter()
+   
+   const [transactions, setTransactions] = useState([]);
+   const [activeInvestments, setActiveInvestments] = useState([]);
+    const user = useSelector(selectUser);
+ 
+
+  useEffect(() => {
+   
+    // Call the function
+    async function fetchActiveInvestments(){
+      const res =  await fetch(`https://avantrades-api.onrender.com/api/investment-plans/`, {
+        method: "GET",
+        headers: {
+        
+            "Content-Type": "application/json"
+        },
+    })
+    
+    const data = await res.json()
+    if (res.status >= 200 & res.status <= 209) {
+      setActiveInvestments(data)
+     
+    }
+    
+    }
+    fetchActiveInvestments()
+ 
+
+
+
+  }, [])
+  
+  const activeInvestment = [
     {
       id: "inv-1",
       planName: "Quick Gain Plan",
@@ -40,13 +83,16 @@ export default function ActiveInvestmentsPage() {
       progress: 25,
     },
   ]
+  console.log("Investment Plans [STATE]: ", activeInvestment);
 
   // Calculate total investment stats
-  const totalInvested = activeInvestments.reduce((sum, inv) => sum + inv.investedAmount, 0)
+  const totalInvested = activeInvestments.reduce((sum, inv) => sum + inv.amount, 0)
   const totalCurrent = activeInvestments.reduce((sum, inv) => sum + inv.currentValue, 0)
   const totalProfit = totalCurrent - totalInvested
   const averageReturn = (totalProfit / totalInvested) * 100
 
+
+ 
   return (
     <div className="min-h-screen bg-[#020617] text-white">
       <div className="container mx-auto px-4 py-8">

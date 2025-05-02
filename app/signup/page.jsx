@@ -129,7 +129,7 @@ export default function SignupPage() {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              disabled={isLoading}
+              disabled={isPending}
               required
               onChange={inputChangeHandler}
             />
@@ -144,7 +144,7 @@ export default function SignupPage() {
               autoCapitalize="none"
               autoComplete="new-password"
               autoCorrect="off"
-              disabled={isLoading}
+              disabled={isPending}
               required
               onChange={inputChangeHandler}
             />
@@ -159,7 +159,7 @@ export default function SignupPage() {
               autoCapitalize="none"
               autoComplete
               autoCorrect="off"
-              disabled={isLoading}
+              disabled={isPending}
               required
               onChange={inputChangeHandler}
             />
