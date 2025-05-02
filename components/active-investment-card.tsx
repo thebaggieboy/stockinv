@@ -16,7 +16,7 @@ interface ActiveInvestmentCardProps {
 }
 
 export default function ActiveInvestmentCard({ investment }: ActiveInvestmentCardProps) {
-  const profit = investment.currentValue - investment.investedAmount
+ 
     // Get current date in JavaScript
     const currentDate = new Date();
     const formatter = new Intl.DateTimeFormat('en-US', {
@@ -26,11 +26,53 @@ export default function ActiveInvestmentCard({ investment }: ActiveInvestmentCar
     });
     
   const prettyDate = formatter.format(currentDate);
-  const formattedEndDate = investment.endDate === "0000-00-00" ? prettyDate : investment.endDate;
-  const formattedStartDate = investment.startDate === "0000-00-00" ? prettyDate : investment.startDate;
-  const formattedInvestmentDate = investment.investment_date === "0000-00-00" ? prettyDate : investment.investment_date;  
+  const formattedStartDate =  formatter.format(investment.startDate);
+  const formattedEndDate =  formatter.format(investment.endDate);
 
 
+  let dailyInterest;
+  let weeklyInterest;
+  let currentValue;
+  let profit
+
+  let totalCurrent;
+
+  if(investment.investment_plan === "quick-gain"){
+    dailyInterest = 0.02107 * investment.amount
+    weeklyInterest = 0.2 * investment.amount
+    currentValue = dailyInterest + investment.amount
+    
+ 
+  }
+  if(investment.investment_plan === "rapid-growth"){
+    dailyInterest = 0.0251 * investment.amount
+    weeklyInterest = 0.25 * investment.amount
+    currentValue = dailyInterest + investment.amount
+
+  }
+  if(investment.investment_plan === "aggressive-boost"){
+    dailyInterest = 0.0251 * investment.amount
+    weeklyInterest = 0.25 * investment.amount
+    currentValue = dailyInterest + investment.amount
+  }
+   
+  if(investment.investment_plan === "accelerated-wealth"){
+    dailyInterest = 0.0287 * investment.amount
+    weeklyInterest = 0.3 * investment.amount
+    currentValue = dailyInterest + investment.amount
+  }
+  if(investment.investment_plan === "ultimate-prosperity"){  
+    dailyInterest = 0.0287 * investment.amount
+    weeklyInterest = 0.3 * investment.amount
+    currentValue = dailyInterest + investment.amount
+  }
+  const totalProfit = currentValue - investment.amount
+  const averageReturn = (totalProfit / investment.amount) * 100
+ 
+  console.log("Is array?", Array.isArray(investment));
+  
+console.log("Investment: ", investment)
+  
   return (
     <div className="bg-[#0a1022] rounded-lg p-6 flex flex-col border border-gray-800">
       <div className="flex justify-between items-center mb-4">
@@ -51,27 +93,23 @@ export default function ActiveInvestmentCard({ investment }: ActiveInvestmentCar
         </div>
         <div>
           <div className="text-xs text-gray-400">Current Value:</div>
-          <div className="text-sm">${investment.currentValue}</div>
+          <div className="text-sm">${currentValue}</div>
+        </div>
+        <div>
+          <div className="text-xs text-gray-400">Daily Interest:</div>
+          <div className="text-sm">${dailyInterest.toFixed(2)}</div>
         </div>
         <div>
           <div className="text-xs text-gray-400">Weekly Interest:</div>
-          <div className="text-sm">+{investment.weekly_roi}%</div>
+          <div className="text-sm">${weeklyInterest}</div>
         </div>
         <div>
-          <div className="text-xs text-gray-400">Return:</div>
+          <div className="text-xs text-gray-400">Montly Interest:</div>
           <div className="text-sm text-green-500">+{investment.monthly_roi}%</div>
         </div>
       </div>
 
-      <div className="mb-4">
-        <div className="flex justify-between text-xs mb-1">
-          <span>Progress</span>
-          <span>{investment.progress}%</span>
-        </div>
-        <div className="w-full bg-gray-700 rounded-full h-2">
-          <div className="bg-blue-500 h-2 rounded-full" style={{ width: `${investment.progress}%` }}></div>
-        </div>
-      </div>
+       
 
       <Link
         href={`/active-investments/${investment.id}`}

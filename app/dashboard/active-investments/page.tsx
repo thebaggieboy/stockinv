@@ -48,48 +48,16 @@ export default function ActiveInvestmentsPage() {
 
   }, [])
   
-  const activeInvestment = [
-    {
-      id: "inv-1",
-      planName: "Quick Gain Plan",
-      investedAmount: 1000,
-      currentValue: 1250,
-      returnPercentage: 25,
-      startDate: "2025-04-15",
-      endDate: "2025-04-29",
-      dailyInterest: 35.71,
-      progress: 50,
-    },
-    {
-      id: "inv-2",
-      planName: "Rapid Growth Plan",
-      investedAmount: 5000,
-      currentValue: 7500,
-      returnPercentage: 50,
-      startDate: "2025-04-10",
-      endDate: "2025-04-24",
-      dailyInterest: 178.57,
-      progress: 75,
-    },
-    {
-      id: "inv-3",
-      planName: "Aggressive Boost Plan",
-      investedAmount: 10000,
-      currentValue: 12000,
-      returnPercentage: 20,
-      startDate: "2025-04-20",
-      endDate: "2025-05-04",
-      dailyInterest: 357.14,
-      progress: 25,
-    },
-  ]
-  console.log("Investment Plans [STATE]: ", activeInvestment);
 
   // Calculate total investment stats
+  
   const totalInvested = activeInvestments.reduce((sum, inv) => sum + inv.amount, 0)
   const totalCurrent = activeInvestments.reduce((sum, inv) => sum + inv.currentValue, 0)
   const totalProfit = totalCurrent - totalInvested
   const averageReturn = (totalProfit / totalInvested) * 100
+  console.log("Average Return: ", averageReturn)
+
+  console.log("Total Invested: ", totalInvested)
 
 
  
