@@ -37,6 +37,14 @@ export default function ActiveInvestmentCard({ investment }: ActiveInvestmentCar
 
   let totalCurrent;
 
+  const investmentArray = Object.values(investment)
+
+  const sum = investmentArray
+  .filter(value => typeof value === 'number') // Keep only numbers
+  .reduce((total, num) => total + num, 0);   // Sum them
+
+   console.log("SUM: ", sum); // Total of all numeric properties
+
   if(investment.investment_plan === "quick-gain"){
     dailyInterest = 0.02107 * investment.amount
     weeklyInterest = 0.2 * investment.amount
