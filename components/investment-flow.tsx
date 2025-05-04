@@ -24,6 +24,50 @@ interface InvestmentFlowProps {
   onClose: () => void
 }
 import { WalletReceive } from "./wallet-receive"
+
+/**
+ * Generates a random transaction ID with customizable options
+ * @param {Object} options - Configuration options
+ * @param {number} options.length - Length of the ID (default: 16)
+ * @param {boolean} options.includeTimestamp - Whether to include timestamp prefix (default: true)
+ * @param {string} options.prefix - Optional prefix for the ID (default: 'TXN')
+ * @param {boolean} options.uppercaseOnly - Whether to use only uppercase characters (default: false)
+ * @returns {string} - The generated transaction ID
+ */
+export function generateTransactionId({
+  length = 16,
+  includeTimestamp = true,
+  prefix = 'TXN',
+  uppercaseOnly = false
+} = {}) {
+  // Characters to use for random part
+  const characters = uppercaseOnly
+    ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  
+  // Generate random string
+  let randomPart = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomPart += characters.charAt(randomIndex);
+  }
+  
+  // Add timestamp if requested
+  const timestamp = includeTimestamp ? new Date().getTime().toString() : '';
+  
+  // Combine components
+  return `${prefix}${timestamp ? '-' + timestamp : ''}-${randomPart}`;
+}
+
+// Example usage
+// const transactionId = generateTransactionId();
+// const customTransactionId = generateTransactionId({ 
+//   length: 12, 
+//   includeTimestamp: true, 
+//   prefix: 'PAYMENT', 
+//   uppercaseOnly: true 
+// });
+
 export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
   const user = useSelector(selectUser)
   const userEmail = useSelector(selectUserEmail)
@@ -44,6 +88,7 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
   const [totalReturn, setTotalReturn] = useState(0)
    const [transactions, setTransactions] = useState([])
   const router = useRouter()
+  const transactionId = generateTransactionId();
 
   // Get current date in JavaScript
   const currentDate = new Date();
@@ -118,7 +163,7 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, amount, type, status}),
+        body: JSON.stringify({ email, amount, type, status, transaction_date: prettyDate, transaction_id: transactionId }),
         credentials: "include"
       })
       

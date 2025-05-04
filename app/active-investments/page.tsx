@@ -13,13 +13,10 @@ import { useSelector, useDispatch } from "react-redux"
 import { WalletWithdraw } from "@/components/wallet-withdraw"
 import { WalletReceive } from "@/components/wallet-receive"
 import { WalletSend } from "@/components/wallet-send"
-import { selectBalance, setBalance } from "@/features/balance/balanceSlice"
-
 
 export default function ActiveInvestmentsPage() {
   const router = useRouter()
-   const dispatch = useDispatch()
-   const balance = useSelector(selectBalance)
+   
    const [transactions, setTransactions] = useState([]);
    const [activeInvestments, setActiveInvestments] = useState([]);
     const user = useSelector(selectUser);
@@ -40,7 +37,6 @@ export default function ActiveInvestmentsPage() {
     const data = await res.json()
     if (res.status >= 200 & res.status <= 209) {
       setActiveInvestments(data)
-   
      
     }
     
@@ -52,7 +48,7 @@ export default function ActiveInvestmentsPage() {
 
   }, [])
   
-console.log("Active Investments BAL: ", balance)
+
   // Calculate total investment stats
   
   const totalInvested = activeInvestments.reduce((sum, inv) => sum + inv.amount, 0)

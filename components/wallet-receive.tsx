@@ -19,6 +19,32 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from "react-redux";
 import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../features/user/userSlice";
+
+export function generateTransactionId({
+  length = 16,
+  includeTimestamp = true,
+  prefix = 'TXN',
+  uppercaseOnly = false
+} = {}) {
+  // Characters to use for random part
+  const characters = uppercaseOnly
+    ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  
+  // Generate random string
+  let randomPart = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomPart += characters.charAt(randomIndex);
+  }
+  
+  // Add timestamp if requested
+  const timestamp = includeTimestamp ? new Date().getTime().toString() : '';
+  
+  // Combine components
+  return `${prefix}${timestamp ? '-' + timestamp : ''}-${randomPart}`;
+}
+
 export function WalletReceive({
   cryptoType = "bitcoin",
   initialAddress = "",
@@ -26,6 +52,7 @@ export function WalletReceive({
   const [open, setOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [selectedCrypto, setSelectedCrypto] = useState(cryptoType)
+  const transactionId = generateTransactionId({ length: 16, includeTimestamp: true, prefix: 'TXN', uppercaseOnly: true })
  
     const [isLoading, setIsLoading] = useState(false)
     const [isDeposit, setIsDeposit] = useState(false)
@@ -79,16 +106,26 @@ export function WalletReceive({
     return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${protocol}:${address}${amountParam}`
   }
 
+  const currentDate = new Date();
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
   
+const prettyDate = formatter.format(currentDate);
+ 
+
     const [formData, setFormData] = useState({
         email:user[0].email,  
         amount: "",
         type: "deposit",
         status: "pending",	
-         
+        transaction_date:prettyDate,
+        transaction_id: transactionId,
+     
       })
-      
-const { email, amount, type, status } = formData
+      const { email, amount, type, status, transaction_date, transaction_id } = formData
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target
@@ -115,7 +152,7 @@ const { email, amount, type, status } = formData
 
           "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, amount, type, status }),
+      body: JSON.stringify({ email, amount, type, status, transaction_date, transaction_id }),
       credentials: "include"
 
   })

@@ -33,6 +33,7 @@ export default function WalletPage() {
    const [wallets, setWallets] = useState([]);
    const [btcBalance, setBtcBalance] = useState([]);
    const [transactions, setTransactions] = useState([]);
+   const [activeInvestments, setActiveInvestments] = useState([])
     const user = useSelector(selectUser);
 
     const usdAmount = wallets.balance;
@@ -109,6 +110,27 @@ const formatDate = (dateString) => {
     }
     fetchTransaction()
 
+      // Call the function
+      async function fetchActiveInvestments(){
+        const res =  await fetch(`https://avantrades-api.onrender.com/api/investment-plans/`, {
+          method: "GET",
+          headers: {
+          
+              "Content-Type": "application/json"
+          },
+      })
+      
+      const data = await res.json()
+      if (res.status >= 200 & res.status <= 209) {
+        setActiveInvestments(data)
+     
+       
+      }
+      
+      }
+      fetchActiveInvestments()
+   
+  
 
 
        
@@ -135,9 +157,19 @@ const getCurrentUserTransactions = () => {
     );
   };
   
+  const getCurrentUserInvestments = () => {
+    if (!activeInvestments || !activeInvestments.length) return [];
+    
+    return activeInvestments.filter(activeInvestments => 
+      activeInvestments.email === user[0]?.email
+    );
+  };
+  getCurrentUserInvestments()
   
   const userTransactions = getUserTransactionsByType('deposit');
-  console.log("User Deposits:", userTransactions);
+  
+ 
+  console.log("Active Investments: ", activeInvestments);
    
   return (
     <div className="flex min-h-screen flex-col">
@@ -543,17 +575,17 @@ const getCurrentUserTransactions = () => {
   </TabsContent>
                   <TabsContent value="investments">
                   <div className="space-y-4">
-      {getUserTransactionsByType("investments").length > 0 ? (
-        getUserTransactionsByType("investments").map((transaction, index) => (
+      {activeInvestments.length > 0 ? (
+        activeInvestments.map((transaction, index) => (
           <div key={index} className="flex items-center justify-between border-b border-border pb-4 last:border-0 last:pb-0">
             <div className="flex items-center gap-4">
               <div className="rounded-full bg-red-100 p-2">
                 <ArrowUp className="h-4 w-4 text-red-500" />
               </div>
               <div>
-                <p className="font-medium">Investments ({transaction.cryptoType || "Bitcoin"})</p>
+                <p className="font-medium">Investments ({transaction.investment_plan || "Bitcoin"})</p>
                 <p className="text-sm text-muted-foreground">
-                  {formatDate(transaction.createdAt) || "Recent"}
+                  {formatDate(transaction.investment_date) || "Recent"}
                 </p>
               </div>
             </div>
@@ -570,7 +602,7 @@ const getCurrentUserTransactions = () => {
         ))
       ) : (
         <div className="text-center py-8 text-muted-foreground">
-          No withdrawal transactions found
+          No Investment transactions found
         </div>
       )}
     </div>
