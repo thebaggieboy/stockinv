@@ -12,6 +12,31 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+export function generateTransactionId({
+  length = 16,
+  includeTimestamp = true,
+  prefix = 'TXN',
+  uppercaseOnly = false
+} = {}) {
+  // Characters to use for random part
+  const characters = uppercaseOnly
+    ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  
+  // Generate random string
+  let randomPart = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomPart += characters.charAt(randomIndex);
+  }
+  
+  // Add timestamp if requested
+  const timestamp = includeTimestamp ? new Date().getTime().toString() : '';
+  
+  // Combine components
+  return `${prefix}${timestamp ? '-' + timestamp : ''}-${randomPart}`;
+}
+
 export function WalletDeposit() {
  
   const [cryptoType, setCryptoType] = useState("bitcoin")
@@ -35,11 +60,23 @@ export function WalletDeposit() {
 
   }
 
+  const currentDate = new Date();
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  
+const prettyDate = formatter.format(currentDate);
+const transactionId = generateTransactionId({ length: 16, includeTimestamp: true, prefix: 'TXN', uppercaseOnly: true })
+
     const [formData, setFormData] = useState({
         email:user[0].email,  
         amount: "",
         type: "deposit",
         status: "pending",	
+        transaction_date:currentDate,
+        transaction_id: transactionId,
          
       })
       

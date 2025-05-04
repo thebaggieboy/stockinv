@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../../features/user/userSlice";
 import { selectUserEmail,  setUserEmail } from "../../features/user/userActiveEmail";
 import {selectToken, setToken} from "../../features/token/tokenSlice";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
 export default function DashboardPage() {
@@ -21,12 +21,9 @@ export default function DashboardPage() {
   const token = useSelector(selectToken);
    const router = useRouter();
    const [wallets, setWallets] = useState([]);
+   const [activeInvestments, setActiveInvestments] = useState([]);
 
-   if(user == null){
-       router.push('/login')
-    }
-
-
+ 
 async function fetchBalance(){
   const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
     method: "GET",
@@ -46,7 +43,7 @@ if (res.status >= 200 & res.status <= 209) {
 
 
 }
-fetchBalance()
+
   async function logout() {
     try {
     
@@ -64,6 +61,43 @@ fetchBalance()
     }
   }
 
+  async function fetchActiveInvestments(){
+    const res =  await fetch(`https://avantrades-api.onrender.com/api/investment-plans/`, {
+      method: "GET",
+      headers: {
+      
+          "Content-Type": "application/json"
+      },
+  })
+  
+  const data = await res.json()
+  if (res.status >= 200 & res.status <= 209) {
+    setActiveInvestments(data)
+ 
+   
+  }
+  
+  }
+
+  
+  const getCurrentUserInvestments = () => {
+    if (!activeInvestments || !activeInvestments.length) return [];
+    
+    return activeInvestments.filter(activeInvestments => 
+      activeInvestments.email === user[0]?.email
+    );
+  };
+
+
+  fetchBalance()
+  fetchActiveInvestments()
+
+  
+  getCurrentUserInvestments()
+ 
+ 
+  console.log("Active Investments: ", activeInvestments);
+   
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -126,6 +160,19 @@ fetchBalance()
                 </CardHeader>
                 <CardContent className="dashboard-card-content">
                   <div className="dashboard-card-value">{wallets?.all_time_roi}%</div>
+                  <p className="dashboard-card-metric dashboard-card-metric-positive">
+                    <TrendingUp className="mr-1 h-3 w-3" />
+                    +{wallets?.this_week_roi}% from last week
+                  </p>
+                </CardContent>
+              </Card>
+              <Card className="dashboard-card">
+                <CardHeader className="dashboard-card-header">
+                  <CardTitle className="dashboard-card-title">Active Investmens</CardTitle>
+                  <BarChart3 className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent className="dashboard-card-content">
+                  <div className="dashboard-card-value">{activeInvestments?.length}</div>
                   <p className="dashboard-card-metric dashboard-card-metric-positive">
                     <TrendingUp className="mr-1 h-3 w-3" />
                     +{wallets?.this_week_roi}% from last week

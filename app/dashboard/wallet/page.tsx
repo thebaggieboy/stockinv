@@ -49,6 +49,10 @@ const formatDate = (dateString) => {
 };
 
   useEffect(() => {
+
+  //  { if(user == null){
+  //     router.push("/login")
+  //   }}
     async function fetchBalance(){
       const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
         method: "GET",
@@ -130,7 +134,7 @@ const formatDate = (dateString) => {
       }
       fetchActiveInvestments()
    
-  
+      
 
 
        

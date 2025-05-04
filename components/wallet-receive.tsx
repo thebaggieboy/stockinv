@@ -19,6 +19,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from "react-redux";
 import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../features/user/userSlice";
+import { current } from "@reduxjs/toolkit"
 
 export function generateTransactionId({
   length = 16,
@@ -121,7 +122,7 @@ const prettyDate = formatter.format(currentDate);
         amount: "",
         type: "deposit",
         status: "pending",	
-        transaction_date:prettyDate,
+        transaction_date:currentDate,
         transaction_id: transactionId,
      
       })
