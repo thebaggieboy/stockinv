@@ -15,7 +15,15 @@ interface InvestmentFlowProps {
     id: string
     name: string
     minimum: number
+    dailyROI:number
+    weeklyROI:number
+    monthlyROI:number
+    daily_current_value: number
+    weekly_current_value: number
+
+    dailyInterest: number
     weeklyInterest: number
+    monthlyInterest: number
     weeklyInterestPercentage: number
     cumulativeROI: number
     cumulativeAmount: number
@@ -122,8 +130,6 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
   
   // Example usage
   const { twoWeeks, oneMonth } = calculateFutureDates();
-  console.log('Two weeks from now:', twoWeeks.toDateString());
-  console.log('One month from now:', oneMonth.toDateString());
 
       const [formData, setFormData] = useState({
             email: user[0]?.email,  
@@ -155,6 +161,7 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
       })
   
     } 
+
 
    const createNewTransaction = async() => { 
     try {
@@ -225,6 +232,7 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
         // Handle error state here
       }
     }
+    
     const handleNext = async() => {
   
       if (step < 4) {
@@ -246,7 +254,47 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
       }
     }
               
+  let dailyInterest;
+  let weeklyInterest;
+  let currentValue;
+
+
    
+  if(investment_plan === "quick-gain"){
+    dailyInterest = 0.02107 * amount
+    weeklyInterest = 0.2 * amount 
+    const plan_current_value =  dailyInterest + amount
+    currentValue = plan_current_value
+     
+
+  }
+  if(investment_plan === "rapid-growth"){
+    dailyInterest = 0.0251 * amount
+    weeklyInterest = 0.25 * amount
+     const plan_current_value =  dailyInterest + amount
+    currentValue = plan_current_value
+
+  }
+  if(investment_plan === "aggressive-boost"){
+    dailyInterest = 0.0251 * amount
+    weeklyInterest = 0.25 * amount
+     const plan_current_value =  dailyInterest + amount
+    currentValue = plan_current_value
+  }
+   
+  if(investment_plan === "accelerated-wealth"){
+    dailyInterest = 0.0287 * amount
+    weeklyInterest = 0.3 * amount 
+    const plan_current_value =  dailyInterest + amount
+    currentValue = plan_current_value
+  }
+  if(investment_plan === "ultimate-prosperity"){  
+    dailyInterest = 0.0287 * amount
+    weeklyInterest = 0.3 * amount
+    const plan_current_value =  dailyInterest + amount
+    currentValue = plan_current_value
+  }
+
   
     useEffect(() => {
      // Call the function
@@ -302,11 +350,27 @@ export default function InvestmentFlow({ plan, onClose }: InvestmentFlowProps) {
   const calculateTotalReturn = () => {
     const expected_return = Number(amount) * (Number(plan.cumulativeROI) / 100)
     const total_return = Number(amount) + expected_return
+   
+    console.log("Total Return: ", total_return)
     
     return total_return
   }
 
   console.log("Form Data: ", formData)
+  
+  console.log('Two weeks from now:', twoWeeks.toDateString());
+  console.log('One month from now:', oneMonth.toDateString());
+  console.log("Current Value: ", currentValue)
+  console.log("Daily Interest: ", dailyInterest)  
+  console.log("Weekly Interest: ", weeklyInterest)
+  console.log("Investment Plan: ", investment_plan)
+  console.log("Investment Amount: ", amount)
+  console.log("Investment Duration: ", investment_duration)
+  console.log("Investment Date: ", investment_date)
+ 
+  console.log("Weekly ROI Date: ", weekly_roi_date)
+  console.log("Monthly ROI Date: ", monthly_roi_date)
+  console.log("Transaction ID: ", transactionId)
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">

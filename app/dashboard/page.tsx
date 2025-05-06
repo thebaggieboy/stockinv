@@ -24,45 +24,9 @@ export default function DashboardPage() {
    const [activeInvestments, setActiveInvestments] = useState([]);
 
  
-async function fetchBalance(){
-  const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
-    method: "GET",
-    headers: {
-    
-        "Content-Type": "application/json"
-    },
-})
-
-const data = await res.json()
-if (res.status >= 200 & res.status <= 209) {
-  setWallets(data)
-  console.log("Wallets [STATE]: ", data);
-}
- 
-
-
-
-}
-
-  async function logout() {
-    try {
-    
-      document.cookie = ""
-
-      dispatch(setToken(null))
-    
-      dispatch(setUserEmail(null))
-      dispatch(setUser(null));
-    
-      
-      
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function fetchActiveInvestments(){
-    const res =  await fetch(`https://avantrades-api.onrender.com/api/investment-plans/`, {
+useEffect(()=>{
+  async function fetchBalance(){
+    const res =  await fetch(`https://avantrades-api.onrender.com/api/wallets/${user?.[0]?.id}`, {
       method: "GET",
       headers: {
       
@@ -72,33 +36,69 @@ if (res.status >= 200 & res.status <= 209) {
   
   const data = await res.json()
   if (res.status >= 200 & res.status <= 209) {
-    setActiveInvestments(data)
- 
+    setWallets(data)
+  
+  }
    
-  }
+  
+  
   
   }
+  
 
-  
-  const getCurrentUserInvestments = () => {
-    if (!activeInvestments || !activeInvestments.length) return [];
+    async function fetchActiveInvestments(){
+      const res =  await fetch(`https://avantrades-api.onrender.com/api/investment-plans/`, {
+        method: "GET",
+        headers: {
+        
+            "Content-Type": "application/json"
+        },
+    })
     
-    return activeInvestments.filter(activeInvestments => 
-      activeInvestments.email === user[0]?.email
-    );
-  };
-
-
-  fetchBalance()
-  fetchActiveInvestments()
-
+    const data = await res.json()
+    if (res.status >= 200 & res.status <= 209) {
+      setActiveInvestments(data)
+   
+     
+    }
+    
+    }
   
-  getCurrentUserInvestments()
- 
- 
-  console.log("Active Investments: ", activeInvestments);
+    
+    const getCurrentUserInvestments = () => {
+      if (!activeInvestments || !activeInvestments.length) return [];
+      
+      return activeInvestments.filter(activeInvestments => 
+        activeInvestments.email === user[0]?.email
+      );
+    };
+  
+  
+    fetchBalance()
+    fetchActiveInvestments()
+  
+    
+    getCurrentUserInvestments()
    
 
+}, [wallets, activeInvestments, user])
+async function logout() {
+  try {
+  
+    document.cookie = ""
+
+    dispatch(setToken(null))
+  
+    dispatch(setUserEmail(null))
+    dispatch(setUser(null));
+  
+    
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+ 
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

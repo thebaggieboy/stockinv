@@ -122,7 +122,7 @@ const prettyDate = formatter.format(currentDate);
         amount: "",
         type: "deposit",
         status: "pending",	
-        transaction_date:currentDate,
+        transaction_date: new Date().toISOString(),
         transaction_id: transactionId,
      
       })

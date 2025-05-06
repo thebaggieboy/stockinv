@@ -21,6 +21,31 @@ import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from "react-redux";
 import { USER_TYPES, selectUser, selectUserType, setUser, setUserType } from "../features/user/userSlice";
 import { selectUserEmail,  setUserEmail } from "../features/user/userActiveEmail";
+
+export function generateTransactionId({
+  length = 8,
+  includeTimestamp = true,
+  prefix = 'TXN',
+  uppercaseOnly = false
+} = {}) {
+  // Characters to use for random part
+  const characters = uppercaseOnly
+    ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+    : 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  
+  // Generate random string
+  let randomPart = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomPart += characters.charAt(randomIndex);
+  }
+  
+  // Add timestamp if requested
+  const timestamp = includeTimestamp ? new Date().getTime().toString() : '';
+  
+  // Combine components
+  return `${prefix}${timestamp ? '-' + timestamp : ''}-${randomPart}`;
+}
 export function WalletWithdraw() {
   
   const [withdrawMethod, setWithdrawMethod] = useState("crypto")
@@ -125,6 +150,10 @@ return date.toLocaleDateString('en-US', {
           amount: "",
           type: "withdraw",
           status: "pending",	
+          transaction_date: new Date().toISOString(),
+
+
+
            
         })
         // Handle form submission

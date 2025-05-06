@@ -179,10 +179,10 @@ const getCurrentUserTransactions = () => {
 
                   <TabsContent value="all">
     <div className="space-y-4">
-      {getCurrentUserTransactions().length > 0 ? (
+      {getCurrentUserTransactions("all").length > 0 ? (
         // Sort by date (newest first) before mapping
-        getCurrentUserTransactions()
-          .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+        getCurrentUserTransactions("all")
+          .sort((a, b) => new Date(b.transaction_date || 0) - new Date(a.transaction_date || 0))
           .map((transaction, index) => {
             const isDeposit = transaction.type === "deposit";
             
@@ -201,7 +201,7 @@ const getCurrentUserTransactions = () => {
                       {isDeposit ? "Deposit" : "Withdrawal"} ({transaction.cryptoType || "Bitcoin"})
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      {formatDate(transaction.createdAt) || "Recent"}
+                      {formatDate(transaction.transaction_date) || "Recent"}
                     </p>
                   </div>
                 </div>
@@ -239,7 +239,7 @@ const getCurrentUserTransactions = () => {
               <div>
                 <p className="font-medium">Deposit ({transaction.cryptoType || "Bitcoin"})</p>
                 <p className="text-sm text-muted-foreground">
-                  {formatDate(transaction.createdAt) || "Recent"}
+                  {formatDate(transaction.transaction_date) || "Recent"}
                 </p>
               </div>
             </div>
@@ -273,7 +273,7 @@ const getCurrentUserTransactions = () => {
               <div>
                 <p className="font-medium">Withdrawal ({transaction.cryptoType || "Bitcoin"})</p>
                 <p className="text-sm text-muted-foreground">
-                  {formatDate(transaction.createdAt) || "Recent"}
+                  {formatDate(transaction.transaction_date) || "Recent"}
                 </p>
               </div>
             </div>

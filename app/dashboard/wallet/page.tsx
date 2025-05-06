@@ -71,7 +71,7 @@ const formatDate = (dateString) => {
     
     }
     
-    fetchBalance()
+   
     
     async function convertUsdToBitcoin() {
     
@@ -112,7 +112,7 @@ const formatDate = (dateString) => {
     }
     
     }
-    fetchTransaction()
+  
 
       // Call the function
       async function fetchActiveInvestments(){
@@ -132,6 +132,11 @@ const formatDate = (dateString) => {
       }
       
       }
+
+
+      fetchBalance()
+
+      fetchTransaction()
       fetchActiveInvestments()
    
       
@@ -140,7 +145,7 @@ const formatDate = (dateString) => {
        
 
   
-  }, [btcBalance, user, usdAmount])
+  }, [btcBalance, user, usdAmount, wallets])
   // console.log("Wallets [STATE]: ", wallets);
   // Function to get all transactions for the current user
 const getCurrentUserTransactions = () => {
@@ -161,6 +166,15 @@ const getCurrentUserTransactions = () => {
     );
   };
   
+  const getUserTransactionsByStatus = (status) => {
+    if (!transactions || !transactions.length) return [];
+    
+    return transactions.filter(transaction => 
+      transaction.email === user[0]?.email && 
+      transaction.status === status
+    );
+  };
+  
   const getCurrentUserInvestments = () => {
     if (!activeInvestments || !activeInvestments.length) return [];
     
@@ -170,10 +184,12 @@ const getCurrentUserTransactions = () => {
   };
   getCurrentUserInvestments()
   
-  const userTransactions = getUserTransactionsByType('deposit');
+  const userTransactionsStatus = getUserTransactionsByStatus('completed');
+
   
  
   console.log("Active Investments: ", activeInvestments);
+  console.log("Completed Transactions: ", userTransactionsStatus);
    
   return (
     <div className="flex min-h-screen flex-col">
@@ -461,7 +477,7 @@ const getCurrentUserTransactions = () => {
       {getCurrentUserTransactions("all").length > 0 ? (
         // Sort by date (newest first) before mapping
         getCurrentUserTransactions("all")
-          .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
+          .sort((a, b) => new Date(b.transaction_date || 0) - new Date(a.transaction_date || 0))
           .map((transaction, index) => {
             const isDeposit = transaction.type === "deposit";
             const isWithdraw = transaction.type === "withdraw";
@@ -483,7 +499,7 @@ const getCurrentUserTransactions = () => {
                       {isDeposit ? "Deposit" : "Withdrawal"} ({transaction.cryptoType || "Bitcoin"})
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      {formatDate(transaction.createdAt) || "Recent"}
+                      {formatDate(transaction.transaction_date) || "Recent"}
                     </p>
                   </div>
                 </div>
@@ -521,7 +537,7 @@ const getCurrentUserTransactions = () => {
               <div>
                 <p className="font-medium">Deposit ({transaction.cryptoType || "Bitcoin"})</p>
                 <p className="text-sm text-muted-foreground">
-                  {formatDate(transaction.createdAt) || "Recent"}
+                  {formatDate(transaction.transaction_date) || "Recent"}
                 </p>
               </div>
             </div>
@@ -555,7 +571,7 @@ const getCurrentUserTransactions = () => {
               <div>
                 <p className="font-medium">Withdrawal ({transaction.cryptoType || "Bitcoin"})</p>
                 <p className="text-sm text-muted-foreground">
-                  {formatDate(transaction.createdAt) || "Recent"}
+                  {formatDate(transaction.transaction_date) || "Recent"}
                 </p>
               </div>
             </div>

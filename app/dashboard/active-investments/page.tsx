@@ -56,13 +56,12 @@ console.log("Active Investments BAL: ", balance)
   // Calculate total investment stats
   
   const totalInvested = activeInvestments.reduce((sum, inv) => sum + inv.amount, 0)
-  const totalCurrent = activeInvestments.reduce((sum, inv) => sum + inv.currentValue, 0)
+  const totalCurrent = activeInvestments.reduce((sum, inv) => sum + inv.current_value, 0)
   const totalProfit = totalCurrent - totalInvested
   const averageReturn = (totalProfit / totalInvested) * 100
   console.log("Average Return: ", averageReturn)
 
   console.log("Total Invested: ", totalInvested)
-
 
  
   return (

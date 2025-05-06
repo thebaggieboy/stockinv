@@ -74,12 +74,10 @@ export default function ActiveInvestmentCard({ investment }: ActiveInvestmentCar
     weeklyInterest = 0.3 * investment.amount
     currentValue = dailyInterest + investment.amount
   }
+
   const totalProfit = currentValue - investment.amount
-  const averageReturn = (totalProfit / investment.amount) * 100
- 
-  console.log("Is array?", Array.isArray(investment));
   
-console.log("Investment: ", investment)
+ 
   
   return (
     <div className="bg-[#0a1022] rounded-lg p-6 flex flex-col border border-gray-800">

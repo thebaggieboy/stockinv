@@ -13,7 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export function generateTransactionId({
-  length = 16,
+  length = 8,
   includeTimestamp = true,
   prefix = 'TXN',
   uppercaseOnly = false
@@ -75,12 +75,16 @@ const transactionId = generateTransactionId({ length: 16, includeTimestamp: true
         amount: "",
         type: "deposit",
         status: "pending",	
-        transaction_date:currentDate,
+        transaction_date:new Date().toISOString(),
         transaction_id: transactionId,
+        payment_method: "crypto",
+        crypto_type: "bitcoin",
+        
+
          
       })
       
-const { email, amount, type, status } = formData
+const { email, amount, type, status , transaction_date, transaction_id, payment_method, crypto_type} = formData
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target
@@ -107,7 +111,7 @@ const { email, amount, type, status } = formData
 
           "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, amount, type, status }),
+      body: JSON.stringify({ email, amount, type, status, transaction_date, transaction_id, payment_method, crypto_type }),
       credentials: "include"
 
   })
@@ -118,7 +122,7 @@ const { email, amount, type, status } = formData
           console.log(data)
           setTransactions(data)
           setIsDepositSuccess(true)
-          router.push("/dashboard/deposit-complete")
+          //router.push("/dashboard/deposit-complete")
 
                  
               }
